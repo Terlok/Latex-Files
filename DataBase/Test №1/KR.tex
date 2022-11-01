@@ -1,0 +1,113 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[english,ukrainian,russian]{babel}
+\linespread{1}
+\usepackage{ucs}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[paper=portrait,pagesize]{typearea}
+\usepackage{amsmath}
+\usepackage{bigints}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{cancel}
+\usepackage{gensymb}
+\usepackage{multirow}
+\usepackage{rotate} 
+\usepackage{pdflscape}
+\usepackage{bigstrut}
+\usepackage[pageanchor]{hyperref}
+\usepackage{chngpage}
+\newcommand{\dx}{\textbf{d}x}
+\newcommand{\dt}{\textbf{d}t}
+\newcommand{\du}{\textbf{d}u}
+\newcommand{\dv}{\textbf{d}v}
+\newcommand{\dy}{\textbf{d}y}
+\newcommand{\ds}{\textbf{d}s}
+\newcommand{\dz}{\textbf{d}z}
+\newcommand{\arch}{\textrm{arcch}}
+\newcommand{\arsh}{\textrm{arcsh}}
+\newcommand{\dint}{\displaystyle\int}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\dsum}{\displaystyle\sum}
+\usepackage[left=20mm, top=20mm, right=15mm, bottom=15mm, nohead, nofoot]{geometry}
+
+
+
+\begin{document}
+	\begin{center}
+		%\vspace*{0,1cm}
+		{\Large \bfseries \textsc{Контрольна робота}}\\
+		\hrulefill\\
+		\Large \textsc{ФІ-12 Завалій Олександр}
+	\end{center}
+	\begin{center}
+		\section*{\bfseries{Завдання для контрольної роботи}}
+	\end{center} 
+	\textbf{Завдання для КР груп ФІ} \\
+	Відношення моделюють роботу міжнародної фірми, що має кілька філій. Філії фірми можуть бути розташовані в різних країнах, це відображено в відношенні $R_1$. Клієнти фірми також можуть бути з різних країн, і це відображено в відношенні $R_4$. По кожному конкретному замовленню клієнт міг замовити кілька різних товарів. \\
+	\textbf{$R_1=$(Філія, Країна)} – список філій  фірми\\
+	\textbf{$R_2=$(Філія, Замовник, № замовлення)} – замовлення по філіях \\
+	\textbf{$R_3=$(№ замовлення, Товар, Кількість)} – вміст замовлення \\
+	\textbf{$R_4=$(Замовник, Країна)} – список замовників \\
+	Вибрати: 
+	\begin{enumerate}
+		\item Філіали фірми, які торгують всіма товарами. 
+		\item Філії, з якими не працює жоден замовник. 
+		\item Замовників, які працюють з усіма філіями фірми, але купують тільки один товар. 
+		\item Замовників, які працюють з філіями фірми, які розташовані тільки в одній країні. 
+		\item Замовників, які працюють тільки з філіями, розташованими в тій же країні, що і замовник. 
+	\end{enumerate}
+	\begin{center}
+		\textbf{№1}
+	\end{center}
+	\begin{enumerate}
+		\item $R_5=R_2[R_2.\textrm{№ замовлення}=R_3.\textrm{№ замовлення}]R_3[\textrm{Філія, Товар}] \\
+		R_6= R_5\div R_1[\textrm{Філія}]$
+		\item  $R_7=R_1[\textrm{Філія}] \backslash R_2[\textrm{Філія}]$
+		\item $
+		R_{8} = R_2[\textrm{Філія, Замовник}] \div R_2[\textrm{Філія}] \\
+		R_{9}= R_2[R_2.\textrm{№ замовлення}=R_3.\textrm{№ замовлення}]R_3 \\
+		R_{10}=R_{9}[R_{9}.\textrm{Замовник}= R_{9}'.\textrm{Замовник}\cap R_9.\textrm{Товар} <>R_9'.\textrm{Товар}]R_9'[\textrm{ Замовник}] \\
+		R_{11}=R_2[\textrm{Замовник}]\backslash R_{10} \\
+		R_{12}=R_{11}\cap R_8$
+		\item $
+		R_{13}=R1[R1.\textrm{Філія}=R2.\textrm{Філія}]R2[\textrm{Замовник, Країна}] \\
+		R_{14}=R_{13}[R_{13}.\textrm{Замовник}=R_{13}'.\textrm{Замовник} \cap R_{13}.\textrm{Країна} <> R_{13}.\textrm{Країна}]R_{13}[\textrm{Замовник}] \\
+		R_{15}=R_2[\textrm{Замовник}]\backslash R_{14}$
+		\item $
+		R_{16}=R_1[R_1.\textrm{Філія} = R_2.\textrm{Філія}]R_4[\textrm{Замовник, Країна}] \\
+		R_{17}=R_{16}\backslash R_4[\textrm{Замовник}] \\
+		R_{18}=R_{17}\backslash R_{16}
+		$
+	\end{enumerate}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+\end{document}
