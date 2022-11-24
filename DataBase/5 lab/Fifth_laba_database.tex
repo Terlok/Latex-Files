@@ -1,0 +1,198 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[english,ukrainian,russian]{babel}
+\linespread{1}
+\usepackage{ucs}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[paper=portrait,pagesize]{typearea}
+\usepackage{amsmath}
+\usepackage{bigints}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{cancel}
+\usepackage{gensymb}
+\usepackage{multirow}
+\usepackage{rotate} 
+\usepackage{pdflscape}
+\usepackage{bigstrut}
+\usepackage[pageanchor]{hyperref}
+\usepackage{chngpage}
+\newcommand{\dx}{\textbf{d}x}
+\newcommand{\dt}{\textbf{d}t}
+\newcommand{\du}{\textbf{d}u}
+\newcommand{\dv}{\textbf{d}v}
+\newcommand{\dy}{\textbf{d}y}
+\newcommand{\ds}{\textbf{d}s}
+\newcommand{\dz}{\textbf{d}z}
+\newcommand{\arch}{\textrm{arcch}}
+\newcommand{\arsh}{\textrm{arcsh}}
+\newcommand{\dint}{\displaystyle\int}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\RomanNumeralCaps}[1]{\MakeUppercase{\romannumeral #1}}
+\newcommand{\dsum}{\displaystyle\sum}
+\usepackage[left=20mm, top=20mm, right=15mm, bottom=15mm, nohead, nofoot]{geometry}
+\usepackage{verbatim}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{blue},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{red},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=none,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=4,
+	frame=shadowbox
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+	
+	\begin{center}
+		%\vspace*{0,1cm}
+		{\Large \bfseries \textsc{Лабораторна робота №5}}\\
+		\hrulefill\\
+		\Large \textsc{ФІ-12 Завалій Олександр\\ Варіант №5}
+	\end{center}
+	\begin{center}
+		\section*{\bfseries{Завдання}}
+	\end{center} 
+	\textbf{Предметна область:} \\
+	Навчально-методичне управління (облік площі приміщень). \\
+	\textbf{Основні предметно-значущі сутності:} \\
+	Приміщення, Підрозділи. \\
+	\textbf{Основні предметно-значущі атрибути сутностей:}
+	\begin{enumerate}
+		\item[-] \textbf{Приміщення}: назва або номер приміщення, вид приміщення (аудиторія, кабінет і т.п.), площа, кількість посадочних місць, підрозділ. 
+		\item[-] \textbf{Підрозділи}: назва, вид підрозділу.
+	\end{enumerate}
+	\textbf{Основні вимоги до функцій системи:}
+	\begin{enumerate}
+		\item[-] Вибрати назви або номери приміщень за підрозділами;
+		\item[-] Підрахувати загальну площу навчальних аудиторій по приміщеннях і в цілому по навчальному закладу;
+		\item[-] Підрахувати загальну кількість посадочних місць для співробітників по підрозділам.
+	\end{enumerate}
+	\textbf{Тригери:}
+	\begin{enumerate}
+		\item На видалення запису з таблиці «Приміщення». Якщо для приміщення зазначено підрозділ, заборонити видалення запису.
+		\item Створити представлення «Аудиторії» з полями «код приміщення», «назва приміщення», «підрозділ», в яку повинні входити приміщення виду «Аудиторія». Оновлювати представлення «Аудиторії».
+	\end{enumerate}
+	\textbf{Процедура:}\\
+	Процедура повинна повертати кількість приміщень для зазначеного підрозділу. \\
+	\begin{center}
+		\textbf{Завдання для лабораторної роботи}
+	\end{center}
+    \begin{enumerate}
+        \item Проаналізувати предметну область вибраного варіанта завдання і сформувати 
+        запити з підзапитами:
+        \begin{itemize}
+            \item Вивід списку атрибутів відношення, кількісні оцінки якого вище середнього.
+            \item Вивід списку атрибутів відношення, кількісні оцінки якого максимальні або
+            мінімальні.
+            \item Вивід списку атрибутів відношення, яке відповідає деякій умові з підзапиту.
+        \end{itemize}        
+    \end{enumerate}
+
+
+\newpage
+	\begin{center}
+		\section*{\bfseries{Реалізація завдання}}
+	\end{center}
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{1}}
+    \end{center}
+    \textbf{Вивід списку атрибутів відношення, кількісні оцінки якого вище середнього.}
+    \begin{lstlisting}[language=SQL]
+    SELECT TypeOfBuilding, AmountOfRooms
+    FROM Building Bl
+    GROUP BY Bl.TypeOfBuilding, Bl.AmountOfRooms
+    HAVING Bl.AmountOfRooms > (SELECT AVG(AmountOfRooms) FROM Building)
+    \end{lstlisting}
+    \begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+            \centering
+			\includegraphics[width=0.8\linewidth]{Prt sc/Figure_1.jpg}  
+		\end{minipage}
+		\caption{Таблиця атрибутів відношення, кількісні оцінки якого вище середнього.}
+	\end{figure}
+    Проведемо невеликий експеримент і перевіримо вірність підрахунку середнього значення.
+    \begin{lstlisting}[language=SQL]
+    SELECT SUM(AmountOfRooms)[Sum], COUNT(AmountOfRooms)[Amount of room], 
+    SUM(AmountOfRooms) / COUNT(AmountOfRooms)[AVG]
+    FROM Building Bl
+    \end{lstlisting}
+    \begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+            \centering
+			\includegraphics[width=0.8\linewidth]{Prt sc/Figure_2.jpg}  
+		\end{minipage}
+		\caption{Таблиця підрахунку суми, кількості та середнього значення.}
+	\end{figure}
+
+    З таблиці видно, що сума кімнат по всім будинкам = 95, кількості будинків = 15.
+    Відповідно: $AVG=\dfrac{96}{15}=6.4\Rightarrow$ усі обрахунки правильні. 
+
+\newpage
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{2}}
+    \end{center}
+    \textbf{Вивід списку атрибутів відношення, кількісні оцінки якого максимальні або мінімальні.}
+    \begin{lstlisting}[language=SQL]
+    SELECT TypeOfBuilding, AmountOfFloors
+    FROM Building Bl
+    GROUP BY Bl.TypeOfBuilding, Bl.AmountOfFloors
+    HAVING Bl.AmountOfFloors = (SELECT MAX(AmountOfFloors) FROM Building) OR 
+    Bl.AmountOfFloors = (SELECT MIN(AmountOfFloors) FROM Building)
+    \end{lstlisting}
+    \begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+            \centering
+			\includegraphics[width=0.8\linewidth]{Prt sc/Figure_3.jpg}  
+		\end{minipage}
+		\caption{Таблиця будинків з min і max кількістю поверхів.}
+	\end{figure}
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{3}}
+    \end{center}
+    \textbf{Сформулюємо таку умову:} \\
+    Відобразити список атрибутів таблиці 'Building', стовпчица 'AmountOfFloors',
+    значення яких більше '3' і меньше '7'. Встановити відповідность цих атрибутів з атрибутами
+    'Area' з таблиці 'Room' значення яких більше середнього. \\
+    На словах звучить заплутано, проте на практиці простіше:
+    \begin{lstlisting}[language=SQL]
+    SELECT TypeOfBuilding, AmountOfFloors, TypeOfRoom, Area
+    FROM Building Bl, Room Rm
+    GROUP BY TypeOfBuilding, AmountOfFloors, TypeOfRoom, Area
+    HAVING Bl.AmountOfFloors > 3 AND Bl.AmountOfFloors < 7 AND Rm.Area > (SELECT AVG(Area) FROM Room)
+    ORDER BY Bl.AmountOfFloors
+    \end{lstlisting}
+    Таблиця на наступній сторінці.
+\newpage
+    \begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+            \centering
+			\includegraphics[width=0.75\linewidth]{Prt sc/Figure_4.jpg}  
+		\end{minipage}
+		\caption{Таблиця відповідності будинків з к-тю поверхів більше 3 і меньше 7 та відповідні
+        їм кімнати з площею більшою за середнє значення. Таблиця відсортована за к-тю поверхів в будинках.}
+	\end{figure}
+
+\end{document}
