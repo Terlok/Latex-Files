@@ -101,7 +101,7 @@
 		\textbf{Завдання для лабораторної роботи}
 	\end{center}
     Створити представлення для перегляду бази даних з ціллю перегляду інформації,
-	сформульованої в розділі «основні вимоги щодо функцій системи» завдання.
+	сформульованої в розділі «Основні вимоги до функцій системи» завдання.
 
 \newpage
 	\begin{center}
@@ -110,5 +110,101 @@
     \begin{center}
         \Large{Task \RomanNumeralCaps{1}}
     \end{center}
+	\textbf{Вибрати назви або номери приміщень за підрозділами}
+	\begin{lstlisting}[language=SQL]
+	CREATE VIEW TaskOne
+	AS
+	SELECT SubdivisionType, TypeOfRoom, RoomNumber
+	FROM Subdivision Sb, Room Rm
+	where Sb.SubdivisionId=Rm.SubdivisionId
+	GROUP BY SubdivisionType, TypeOfRoom, RoomNumber
+	GO
+	
+	SELECT * 
+	FROM TaskOne
+	GO
+	\end{lstlisting}
+	\begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+			\centering
+			\includegraphics[width=0.6\linewidth]{Prt sc/Figure_1.jpg}  
+		\end{minipage}
+		\caption{Таблиця назв та номерів приміщень за підрозділами.}
+	\end{figure}
+	
+\newpage
+	\begin{center}
+        \Large{Task \RomanNumeralCaps{2}}
+    \end{center}
+	\textbf{Підрахувати загальну площу навчальних аудиторій по приміщеннях}
+	\begin{lstlisting}[language=SQL]
+	CREATE VIEW TaskTwo_1
+	AS
+	SELECT TypeOfRoom, COUNT(TypeOfRoom)[Number of rooms], SUM(Area)[Total area by rooms]
+	FROM Room 
+	WHERE TypeOfRoom=TypeOfRoom
+	GROUP BY TypeOfRoom
+	GO
+	
+	SELECT *
+	FROM TaskTwo_1
+	GO
+	\end{lstlisting}
+	\begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+			\centering
+			\includegraphics[width=0.7\linewidth]{Prt sc/Figure_2.jpg}  
+		\end{minipage}
+		\caption{Загальна площа навчальних аудиторій по приміщеннях.}
+	\end{figure}
+
+\newpage
+	\textbf{Підрахувати загальну площу по навчальному закладу}
+	\begin{lstlisting}[language=SQL]
+	CREATE VIEW TaskTwo_2
+	AS
+	SELECT TypeOfBuilding, SUM(Rm.Area)[Total area of the building]
+	FROM Building Bl, Room Rm
+	WHERE Bl.BiuldingId=Rm.BiuldingId
+	GROUP BY Bl.TypeOfBuilding
+	GO
+	
+	SELECT *
+	FROM TaskTwo_2
+	GO
+	\end{lstlisting}
+	\begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+			\centering
+			\includegraphics[width=0.7\linewidth]{Prt sc/Figure_3.jpg}  
+		\end{minipage}
+		\caption{Загальна площа по навчальному закладу.}
+	\end{figure}
+
+\newpage
+	\begin{center}
+        \Large{Task \RomanNumeralCaps{3}}
+    \end{center}
+	\textbf{Підрахувати загальну кількість посадочних місць для співробітників по підрозділам}
+	\begin{lstlisting}[language=SQL]
+	CREATE VIEW TaskThree
+	AS
+	SELECT SubdivisionType, SUM(AmountOfSeats)[Number of seats]
+	FROM Subdivision Sb, Room Rm
+	WHERE Sb.SubdivisionId=Rm.SubdivisionId
+	GROUP BY SubdivisionType
+	GO
+	
+	SELECT * 
+	FROM TaskThree
+	GO
+	\end{lstlisting}
+	\begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+			\centering
+			\includegraphics[width=0.7\linewidth]{Prt sc/Figure_4.jpg}  
+		\end{minipage}
+		\caption{Загальна кількість посадочних місць для співробітників по підрозділам.}
+	\end{figure}
 
 \end{document}
