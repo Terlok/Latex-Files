@@ -108,5 +108,53 @@
         \Large{Task \RomanNumeralCaps{1}}
     \end{center}
     \textbf{Створити тригер на видалення запису з таблиці «Приміщення». Якщо для приміщення зазначено підрозділ, заборонити видалення запису.}
+	\begin{lstlisting}[language=SQL]
+	CREATE TRIGGER DeleteLine ON Room INSTEAD OF DELETE
+	AS BEGIN
+		DECLARE @SubdId INT;
+		DECLARE @count INT;
+		SELECT @SubdId = SubdivisionId FROM DELETED;
+		SELECT @count = COUNT(*) FROM Subdivision WHERE SubdivisionId = @SubdId;
+		IF @count = 0
+			DELETE FROM Room WHERE RoomId = @SubdId;
+		ELSE
+			THROW 51000, 'Can not delete - Room is referenced in other tables', 1;
+	END
+
+	DELETE FROM Room WHERE RoomId='1'
+	GO
+	\end{lstlisting}
+	\begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+			\centering
+			\includegraphics[width=0.6\linewidth]{Prt sc/Figure_1.jpg}  
+		\end{minipage}
+		\caption{Спроба видалити запис під номером "1".}
+	\end{figure}
 	
+	\begin{center}
+        \Large{Task \RomanNumeralCaps{2}}
+    \end{center}
+	\textbf{Створити представлення «Аудиторiї» з полями «код примiщення», «назва примiщен-
+	ня», «пiдроздiл», в яку повиннi входити примiщення виду «Аудиторiя». Оновлювати
+	представлення «Аудиторiї».} \\
+	Спочатку створемо представлення «Аудиторiї» з відповідними полями.
+	\begin{lstlisting}[language=SQL]
+	CREATE VIEW Audience AS
+	SELECT RoomId, TypeOfRoom, Rm.SubdivisionId FROM Subdivision Sb, Room Rm
+		where Sb.SubdivisionId=Rm.SubdivisionId and Rm.TypeOfRoom='Audience'
+	GO
+	
+	SELECT *
+	FROM Audience
+	GO
+	\end{lstlisting}
+\newpage
+	\begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+			\centering
+			\includegraphics[width=0.6\linewidth]{Prt sc/Figure_2.jpg}  
+		\end{minipage}
+		\caption{Представлення «Аудиторiї».}
+	\end{figure}
 \end{document}
