@@ -109,18 +109,20 @@
     \end{center}
     \textbf{Створити тригер на видалення запису з таблиці «Приміщення». Якщо для приміщення зазначено підрозділ, заборонити видалення запису.}
 	\begin{lstlisting}[language=SQL]
-	CREATE TRIGGER tr_DeleteLine ON Room INSTEAD OF DELETE
-	AS BEGIN
-		DECLARE @SubdId INT,  @count INT
-		SELECT @SubdId = SubdivisionId FROM DELETED
-		SELECT @count = COUNT(*) FROM Subdivision WHERE SubdivisionId = @SubdId
-		IF @count = 0
-			DELETE FROM Room WHERE RoomId = @SubdId;
-		ELSE
-			THROW 51000, 'Can not delete - Room is referenced in other tables', 1;
+	CREATE TRIGGER tr_DeleteLine ON Room FOR DELETE
+	AS
+	BEGIN
+		IF EXISTS (
+			SELECT 'True' FROM Subdivision as Sb
+			JOIN Room ON Room.SubdivisionId = Sb.SubdivisionId
+			WHERE Sb.SubdivisionId IS NOT NULL )
+		BEGIN 
+			RAISERROR('Can not delete - Room is referenced in other tables', 16, 1)
+			ROLLBACK TRAN
+		END
 	END
-		
-	DELETE FROM Room WHERE RoomId='1'
+	
+	DELETE FROM Room WHERE RoomId='20'
 	GO
 	\end{lstlisting}
 	\begin{figure}[h!]
@@ -128,7 +130,7 @@
 			\centering
 			\includegraphics[width=0.6\linewidth]{Prt sc/Figure_1.jpg}  
 		\end{minipage}
-		\caption{Спроба видалити запис під номером "1".}
+		\caption{Спроба видалити запис під номером "20".}
 	\end{figure}
 	
 	\begin{center}
@@ -161,98 +163,13 @@
 		\caption{Представлення «Аудиторiї».}
 	\end{figure}
 	\begin{center}
-		\textbf{Створемо тригер для оновлення представлення «Аудиторiї».}
+		\textbf{Проведемо аналіз представлення.}
 	\end{center}
-	\begin{lstlisting}[language=SQL]
-	CREATE TRIGGER tr_Audience
-	ON Audience
-	INSTEAD OF UPDATE
-	AS
-	Begin
-		DECLARE @SubdId int
-		SELECT @SubdId = Sub.SubdivisionId
-		FROM Subdivision AS Sub
-		JOIN inserted
-		ON inserted.SubdivisionId=Sub.SubdivisionId
-	
-		if(Update(RoomId) OR UPDATE(TypeOfRoom))
-		Begin
-			Raiserror('Id cannot be changed', 16, 1)
-			Return
-		End
-		
-		if(Update(SubdivisionId))
-		Begin
-			if(@SubdId is NULL)
-			Begin
-				Raiserror('Invalid Subdivision Id', 16, 1)
-				Return
-			End
-			Update Room set SubdivisionId = @SubdId
-			from inserted
-			join Room
-			on Room.RoomId = inserted.RoomId
-		End
-	End
-	\end{lstlisting}
 
-\newpage
-	\begin{center}
-		\textbf{Спробуємо оновити колонки "RoomId" або "TypeOfRoom".}
-	\end{center}
-	\begin{lstlisting}[language=SQL]
-	update Audience
-	set RoomId='30'
-	WHERE RoomId='22'
-	GO
-	
-	update Audience
-	set TypeOfRoom='Room'
-	WHERE RoomId='22'
-	GO
-	\end{lstlisting}
-	Оскільки ці колонки не можна змінювати отримаємо відповідне повідомлення:
-	\begin{figure}[h!]
-		\begin{minipage}[h]{1\linewidth}
-			\centering
-			\includegraphics[width=0.6\linewidth]{Prt sc/Figure_3.jpg}  
-		\end{minipage}
-		\caption{Error messages}
-	\end{figure}
-	\begin{center}
-		\textbf{Спробуємо оновити колонку "SubdivisionId".}
-	\end{center}
-	Спочатку змінимо значення "SubdivisionId" на неіснуюче, щоб перевірити роботу тригера. 
-	А далі відповідно підставимо існуючі значення.
-	\begin{lstlisting}[language=SQL]
-	update Audience
-	set SubdivisionId='33'
-	WHERE RoomId='22'
-	GO
-	
-	update Audience
-	set SubdivisionId='2'
-	WHERE RoomId='22'
-	GO
-	
-	SELECT *
-	FROM Audience
-	\end{lstlisting}
-	\begin{figure}[h!]
-		\begin{minipage}[h]{1\linewidth}
-			\centering
-			\includegraphics[width=0.6\linewidth]{Prt sc/Figure_4.jpg}  
-		\end{minipage}
-		\caption{Error message}
-	\end{figure}
+	Оскільки колонка <<RoomId>> це identity column. Її оновлювати неможливо. Також для таблиці <<Room>> було створено 
+	зовнiшнiй ключ для колонки <<SubdivisionId>> з таблиці <<Subdivision>>. Тому ми автоматично уникємо можливих
+	похибок з оновленням колонки <<SubdivisionId>> з таблиці <<Room>> на неіснуючі значення. 
 
-\newpage
-	\begin{figure}[h!]
-		\begin{minipage}[h]{1\linewidth}
-			\centering
-			\includegraphics[width=0.6\linewidth]{Prt sc/Figure_5.jpg}  
-		\end{minipage}
-		\caption{Result}
-	\end{figure}
+	Виходячі з цього можемо дійти висновку, що представлення «Аудиторiї» є оновлюваним. Тобто створювати тригер не потрібно.
 
 \end{document}
