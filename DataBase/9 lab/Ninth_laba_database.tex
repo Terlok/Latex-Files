@@ -103,5 +103,150 @@
     \begin{center}
         \Large{Task \RomanNumeralCaps{1}}
     \end{center}
+	\textbf{\RomanNumeralCaps{1}.\RomanNumeralCaps{1}}
+	Створити новий обліковий запис.
+	\begin{lstlisting}[language=SQL]
+	USE TestProject
+	GO
+	
+	CREATE LOGIN Bill_Login
+	WITH PASSWORD='password',
+	DEFAULT_DATABASE=TestProject;
+	GO
+	
+	CREATE USER Bill FOR LOGIN Bill_Login
+	GO
+	\end{lstlisting}
 
+	\textbf{\RomanNumeralCaps{1}.\RomanNumeralCaps{2}}
+	Назначити користувачу роль БД.
+	\begin{lstlisting}[language=SQL]
+	CREATE SERVER ROLE TableAdmin 
+	GO  
+
+	ALTER SERVER ROLE TableAdmin ADD MEMBER Bill_Login
+	GO 
+	\end{lstlisting}
+
+	\textbf{\RomanNumeralCaps{1}.\RomanNumeralCaps{3}}
+	Надати користувачу Bill повноваження на доступ к збереженої процедури.
+	\begin{lstlisting}[language=SQL]
+	GRANT EXECUTE ON OBJECT::AmountOfRoom  
+		TO Bill
+	GO
+	\end{lstlisting}
+
+	\textbf{\RomanNumeralCaps{1}.\RomanNumeralCaps{4}}
+	Відкликати всі надані користувачу Bill привілегії.
+	\begin{lstlisting}[language=SQL]
+	REVOKE EXECUTE ON OBJECT::AmountOfRoom TO Bill
+	GO
+	
+	ALTER SERVER ROLE TableAdmin DROP MEMBER Bill_Login
+	\end{lstlisting}
+
+\newpage
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{2}}
+    \end{center}
+	\begin{center}
+		\textbf{Поясніть призначення команд Transact SQL.}
+	\end{center}
+	\begin{enumerate}
+		\item[$a)$] Надаємо дозвіли <<SELECT>> та <<INSERT>> користувачу <<J\_Smith>> на таблицю <<SUPPLIES>> 
+		з можливістю надати ці дозволи іншим об'єктам. Користувач <<Economists>> надає дозвіл 
+		користувачу <<J\_Smith>> на успадкування цих можливостей.
+		\item[$b)$] У наступному прикладі створюється SQL Server login для 
+		користувача <<king\_of\_the\_db>> із паролем <<a2h7d0f7dg84mdf94>>, з базою даних за 
+		замовчуванням <<PROJECTS>>, мовою за замовчуванням <<Ukrainian>>, ідентифікатором безпеки (sid)
+		<<master>>, та пароль передається у відкритому вигляди. Тобто ніяк не шифрується.
+		\item[$c)$] Відміняємо всі надані привілеї користувачу <<M\_Ivanenko>>.
+		Параметр <<CASCADE>> вказує на те, що дозвіл також скасовується і в користувачів, які отримали доступ через цього користувача.
+	\end{enumerate}
+
+	\begin{center}
+        \Large{Task \RomanNumeralCaps{3}}
+    \end{center}
+	\begin{center}
+		\textbf{Зашифруйте зміст однієї з колонок таблиці в створеній БД.}
+	\end{center}
+	\begin{lstlisting}[language=SQL]
+	USE master;
+	GO
+	SELECT *
+	FROM sys.symmetric_keys
+	WHERE name = '##MS_ServiceMasterKey##';
+	GO
+	
+	USE TestProject;
+	GO
+	CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'password';
+	GO
+	
+	CREATE CERTIFICATE Certificate1
+	WITH SUBJECT = 'Protect Data';
+	GO
+	
+	CREATE SYMMETRIC KEY SymmetricKey1 
+	WITH ALGORITHM = AES_128 
+	ENCRYPTION BY CERTIFICATE Certificate1;
+	GO
+	
+	ALTER TABLE dbo.Ownerss 
+	ADD first_name_encrypt varbinary(MAX) NULL
+	GO
+	
+	USE TestProject;
+	GO
+	OPEN SYMMETRIC KEY SymmetricKey1
+	DECRYPTION BY CERTIFICATE Certificate1;
+	GO
+	UPDATE dbo.Ownerss
+	SET first_name_encrypt = EncryptByKey 
+	(Key_GUID('SymmetricKey1'), FirstName)
+	FROM dbo.Ownerss;
+	GO
+	CLOSE SYMMETRIC KEY SymmetricKey1;
+	GO
+	\end{lstlisting}
+
+\newpage
+	\begin{lstlisting}[language=SQL]
+	USE TestProject;
+	GO
+	ALTER TABLE dbo.Ownerss
+	DROP COLUMN FirstName;
+	GO
+	
+	SELECT *
+	FROM dbo.Ownerss
+	GO
+	\end{lstlisting}
+	\begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+			\centering
+			\includegraphics[width=0.5\linewidth]{Prt sc/Figure_1.jpg}  
+		\end{minipage}
+		\caption{Таблиця <<dbo.Ownerss>> з зашифрованими даними.}
+	\end{figure}
+	\begin{lstlisting}[language=SQL]
+	USE TestProject
+	GO
+	OPEN SYMMETRIC KEY SymmetricKey1
+	DECRYPTION BY CERTIFICATE Certificate1;
+	GO
+	SELECT 
+	CONVERT(varchar, DecryptByKey(first_name_encrypt)) 
+	AS 'Decrypted first name', LastName
+	FROM dbo.Ownerss;
+	CLOSE SYMMETRIC KEY SymmetricKey1;
+	GO
+	\end{lstlisting}
+	\begin{figure}[h!]
+		\begin{minipage}[h]{1\linewidth}
+			\centering
+			\includegraphics[width=0.5\linewidth]{Prt sc/Figure_2.jpg}  
+		\end{minipage}
+		\caption{Переглядаємо зашифровані дані.}
+	\end{figure}
 \end{document}
