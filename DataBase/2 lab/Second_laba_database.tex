@@ -63,6 +63,7 @@
 
 \lstset{style=mystyle}
 
+
 \begin{document}
 	
 		\begin{center}
@@ -104,6 +105,7 @@
 		\item Створіть зовнішні ключі у всіх таблицях, використовуючи опцію FOREIGN KEY, при цьому встановіть опцію каскадного видалення там, де це необхідно.
 		\item Відключіть обмеження зовнішнього ключа в таблиці . введіть в таблицю запис, значення поля якого порушує логічну цілісність таблиці. Спробуйте підключити раніше відключені обмеження.
 		\item Виконайте всі необхідні дії для того, щоб знову підключити обмеження, а всі дані у відношенні відповідали умовам цілісності бази даних.
+
 \newpage
 		\item Змоделюйте ситуацію, коли необхідно відключити обмеження та розробіть заходи, які дозволять вам в подальшому привести базу даних в стан, що відповідає всім умовам цілісності.
 		\item Додати в одну з таблиць стовпець Single, тип даних VARCHAR(3), призначивши значення по замовчуванню «так». Видалити стовпець.
@@ -115,8 +117,7 @@
 	\begin{center}
 		\section*{\bfseries{Реалізація завдання}}
 	\end{center}
-	
-	%\lstinputlisting[language=SQL]{Code.txt}
+
 	\begin{lstlisting}[language=SQL]
 	USE master
 	CREATE DATABASE TestProject
@@ -161,6 +162,7 @@
 		SeatsId INT FOREIGN KEY REFERENCES TypeOfSeats(SeatsId),
 		PRIMARY KEY(RoomId, SeatsId) );
 	\end{lstlisting}
+
 \newpage
 	\begin{center}
 		\textbf{№1}
@@ -212,6 +214,7 @@
 		\end{minipage}
 		\caption{Вивід таблиці з відключеним обмеженням зовнішнього ключа.}
 	\end{figure}
+
 \newpage
 	\begin{lstlisting}[language=SQL]
 	ALTER TABLE Room WITH CHECK
@@ -260,6 +263,7 @@
 	SELECT * FROM Building
 	SELECT * FROM Room
 	\end{lstlisting}
+
 \newpage
 	\begin{figure}[h!]
 		\centering
@@ -327,11 +331,6 @@
 		\caption{Таблиця Subdivision05 перейменована на Subdivision.}
 	\end{figure}
 	
-	
-	
-	
-	
-	
 \newpage
 		\begin{figure}[h!]
 		\begin{center}
@@ -341,7 +340,5 @@
 		\end{center}
 		\caption{Entity relationship diagram}
 	\end{figure}
-	
-	
 	
 \end{document}
