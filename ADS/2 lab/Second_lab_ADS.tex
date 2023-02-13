@@ -18,6 +18,7 @@
 \usepackage{bigstrut}
 \usepackage[pageanchor]{hyperref}
 \usepackage{chngpage}
+\usepackage{booktabs}
 \newcommand\tab[1][1cm]{\hspace*{#1}}
 \newcommand{\RomanNumeralCaps}[1]{\MakeUppercase{\romannumeral #1}}
 \usepackage[left=20mm, top=20mm, right=15mm, bottom=15mm, nohead, nofoot]{geometry}
@@ -76,5 +77,68 @@
         \Large{Task \RomanNumeralCaps{2}}
     \end{center}
     \textbf{Написати програму, що реалізує метод швидкого соpтування.}
-    
+
+\newpage
+\KOMAoptions{paper=A4,paper=landscape,DIV=20,pagesize}
+    \begin{table}[htbp]
+        \centering
+        \begin{tabular}{@{}|c|ccccc|ccccc|@{}}
+        \toprule
+        &
+        \multicolumn{5}{c|}{Сортування методом вибору} &
+        \multicolumn{5}{c|}{Швидке сортування} \\ \midrule
+        \multirow{2}{*}{N} &
+        \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть копіювань\\ \\ (M)\end{tabular}} &
+        \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть порівнянь\\ \\ (C)\end{tabular}} &
+        \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Час\\ \\ (T)\end{tabular}} &
+        \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть копіювань\\ \\ (M)\end{tabular}} &
+        \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть порівнянь\\ \\ (C)\end{tabular}} &
+        \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Час\\ \\ (T)\end{tabular}} \\ \cmidrule(lr){2-5} \cmidrule(lr){7-10}
+        &
+        \multicolumn{1}{c|}{Теорет.} &
+        \multicolumn{1}{c|}{Експерим.} &
+        \multicolumn{1}{c|}{Теорет.} &
+        \multicolumn{1}{c|}{Експерим.} &
+        &
+        \multicolumn{1}{c|}{Теорет.} &
+        \multicolumn{1}{c|}{Експерим.} &
+        \multicolumn{1}{c|}{Теорет.} &
+        \multicolumn{1}{c|}{Експерим.} &
+        \\ \midrule
+        100 &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \\ \midrule
+        1000 &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \\ \midrule
+        10000 &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \multicolumn{1}{c|}{} &
+        \\ \bottomrule
+        \end{tabular}
+    \end{table}
+
 \end{document}
