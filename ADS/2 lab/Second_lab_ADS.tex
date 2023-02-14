@@ -35,7 +35,7 @@
         \large{Лабораторна робота № 2}
         \begin{center}
             \normalsize{\textbf{з дисципліни «Алгоритми та структури даних» \\
-            На тему: «Рекурсивні алгоритми» \\}}
+            На тему: «Методи сортування масивів» \\}}
         \end{center}
     \end{center}
     \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break
@@ -59,13 +59,16 @@
         \Large{Варіант №5}
     \end{center}
     \textbf{Написати програму, що реалізує один з простих методів сортування.
-    Сортування методом вибору.}
+    Сортування методом вибору.} \\
+    $C=\dfrac{(n-1)n}{2}$ \\
+    $M=n-1$
     \begin{figure}[h!]
         \begin{minipage}[h]{1\linewidth}
             \centering
             \includegraphics[width=1\linewidth]{Prt sc/Figure_1.png}  
         \end{minipage}
-    \end{figure}
+    \end{figure} \\
+    Результати виконання алгоритму.
     \begin{figure}[h!]
         \begin{minipage}[h]{1\linewidth}
             \centering
@@ -73,71 +76,106 @@
         \end{minipage}
     \end{figure}
 
+\newpage
     \begin{center}
         \Large{Task \RomanNumeralCaps{2}}
     \end{center}
-    \textbf{Написати програму, що реалізує метод швидкого соpтування.}
+    \textbf{Написати програму, що реалізує метод швидкого соpтування.} \\
+    $\sim n\log_2n$ 
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=1\linewidth]{Prt sc/Figure_3.png}  
+        \end{minipage}
+    \end{figure} \\
+    Результати виконання алгоритму.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=1\linewidth]{Prt sc/Figure_4.png}
+        \end{minipage}
+    \end{figure}
+
+\newpage
+    Функція, що використовується для підрахунку часу виконання іншого блоку кода.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=1\linewidth]{Prt sc/Figure_5.png}
+        \end{minipage}
+    \end{figure} \\
+    Початковий та відсортовані масиви.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=1\linewidth]{Prt sc/Figure_6.png}
+        \end{minipage}
+    \end{figure}
 
 \newpage
 \KOMAoptions{paper=A4,paper=landscape,DIV=20,pagesize}
-    \begin{table}[htbp]
+    \begin{center}
+        \Large{Результати порiвняння методiв сортування}
+    \end{center}
+    
+    \begin{table}[h]
         \centering
-        \begin{tabular}{@{}|c|ccccc|ccccc|@{}}
-        \toprule
-        &
-        \multicolumn{5}{c|}{Сортування методом вибору} &
-        \multicolumn{5}{c|}{Швидке сортування} \\ \midrule
-        \multirow{2}{*}{N} &
-        \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть копіювань\\ \\ (M)\end{tabular}} &
-        \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть порівнянь\\ \\ (C)\end{tabular}} &
-        \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Час\\ \\ (T)\end{tabular}} &
-        \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть копіювань\\ \\ (M)\end{tabular}} &
-        \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть порівнянь\\ \\ (C)\end{tabular}} &
-        \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Час\\ \\ (T)\end{tabular}} \\ \cmidrule(lr){2-5} \cmidrule(lr){7-10}
-        &
-        \multicolumn{1}{c|}{Теорет.} &
-        \multicolumn{1}{c|}{Експерим.} &
-        \multicolumn{1}{c|}{Теорет.} &
-        \multicolumn{1}{c|}{Експерим.} &
-        &
-        \multicolumn{1}{c|}{Теорет.} &
-        \multicolumn{1}{c|}{Експерим.} &
-        \multicolumn{1}{c|}{Теорет.} &
-        \multicolumn{1}{c|}{Експерим.} &
-        \\ \midrule
-        100 &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \\ \midrule
-        1000 &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \\ \midrule
-        10000 &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \multicolumn{1}{c|}{} &
-        \\ \bottomrule
+        \begin{tabular}{|c|ccccc|ccccc|}
+            \hline
+            &
+            \multicolumn{5}{c|}{Сортування методом вибору} &
+            \multicolumn{5}{c|}{Швидке сортування} \\ \hline
+            \multirow{2}{*}{N} &
+            \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть копіювань\\ \\ (M)\end{tabular}} &
+            \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть порівнянь\\ \\ (C)\end{tabular}} &
+            \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Час\\ \\ (T)\end{tabular}} &
+            \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть копіювань\\ \\ (M)\end{tabular}} &
+            \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}К-ть порівнянь\\ \\ (C)\end{tabular}} &
+            \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Час\\ \\ (T)\end{tabular}} \\ \cline{2-5} \cline{7-10}
+            &
+            \multicolumn{1}{c|}{Теорет.} &
+            \multicolumn{1}{c|}{Експерим.} &
+            \multicolumn{1}{c|}{Теорет.} &
+            \multicolumn{1}{c|}{Експерим.} &
+            &
+            \multicolumn{1}{c|}{Теорет.} &
+            \multicolumn{1}{c|}{Експерим.} &
+            \multicolumn{1}{c|}{Теорет.} &
+            \multicolumn{1}{c|}{Експерим.} &
+            \\ \hline
+            100 &
+            \multicolumn{1}{c|}{99} &
+            \multicolumn{1}{c|}{93} &
+            \multicolumn{1}{c|}{4950} &
+            \multicolumn{1}{c|}{4950} &
+            0.0047 &
+            \multicolumn{1}{c|}{664} &
+            \multicolumn{1}{c|}{687} &
+            \multicolumn{1}{c|}{664} &
+            \multicolumn{1}{c|}{687} &
+            0.00162 \\ \hline
+            1000 &
+            \multicolumn{1}{c|}{999} &
+            \multicolumn{1}{c|}{996} &
+            \multicolumn{1}{c|}{499500} &
+            \multicolumn{1}{c|}{499500} &
+            0.4166 &
+            \multicolumn{1}{c|}{9966} &
+            \multicolumn{1}{c|}{11371} &
+            \multicolumn{1}{c|}{9966} &
+            \multicolumn{1}{c|}{11371} &
+            0.02219 \\ \hline
+            10000 &
+            \multicolumn{1}{c|}{9999} &
+            \multicolumn{1}{c|}{9992} &
+            \multicolumn{1}{c|}{49995000} &
+            \multicolumn{1}{c|}{49995000} &
+            43.4776 &
+            \multicolumn{1}{c|}{132877} &
+            \multicolumn{1}{c|}{160178} &
+            \multicolumn{1}{c|}{132877} &
+            \multicolumn{1}{c|}{160178} &
+            0.2965 \\ \hline
         \end{tabular}
     \end{table}
 
