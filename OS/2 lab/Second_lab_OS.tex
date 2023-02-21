@@ -1,0 +1,159 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[english,ukrainian,russian]{babel}
+\linespread{1}
+\usepackage{ucs}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[paper=portrait,pagesize]{typearea}
+\usepackage{amsmath}
+\usepackage{bigints}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{cancel}
+\usepackage{gensymb}
+\usepackage{multirow}
+\usepackage{rotate} 
+\usepackage{pdflscape}
+\usepackage{bigstrut}
+\usepackage[pageanchor]{hyperref}
+\usepackage{chngpage}
+\usepackage{fancybox,fancyhdr}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\RomanNumeralCaps}[1]{\MakeUppercase{\romannumeral #1}}
+\usepackage[left=20mm, top=20mm, right=15mm, bottom=15mm, nofoot]{geometry}
+
+
+\begin{document}
+    \pagestyle{fancy}
+    \fancyhead{}
+    \fancyhead[R]{ФІ-12 Завалій Олександр}
+    \begin{center}
+        \large{\textbf{Міністерство освіти і науки України\\
+                Національний технічний університет України\\
+                «Київський політехнічний інститут імені Ігоря Сікорського»\\
+                Навчально-науковий Фізико-технічний інститут}}\\
+        \hfill \break \hfill \break \hfill\break \hfill \break \hfill \break \hfill \break \hfill \break
+        \hfill \break \hfill \break \hfill \break
+        \begin{center}
+            \normalsize{\textbf{ОПЕРАЦІЙНІ СИСТЕМИ\\
+            Комп’ютерний практикум\\
+            Робота №2}}
+        \end{center}
+    \end{center}
+    \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break
+    \hfill \break \hfill \break \hfill \break \hfill \break 
+    \begin{flushright}
+        \large{ \hspace{35pt} Виконав:\\
+            студент групи ФI-12\\
+            Завалій Олександр\\} 
+        \large{ \hspace{35pt} Перевірив:\\
+        Кірієнко О.В.} 
+    \end{flushright}
+    \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break
+    \hfill \break
+    \begin{center} \textbf{Київ-2023} \end{center}
+    \thispagestyle{empty}
+
+\newpage
+    \begin{center}
+        \section*{\bfseries{Робота №2.\\
+        Система розмежування доступу в UNIX і
+        Linux, права доступу до файлів і керування ними}}
+    \end{center}
+    \textbf{Мета:} \\
+    \hangindent=1.5cm 
+    \hangafter=+1 \noindent
+    Оволодіння практичними навичками керування
+    правами доступу до файлів і їхній аналіз в ОС UNIX та
+    Linux \\
+    \begin{center}
+        \Large{Варіант №5}
+    \end{center}
+    Зміст індивідуального завдання:
+    \begin{enumerate}
+        \item Створіть каталог \textbf{lab\_2}.
+        \item Скопіюйте в каталог \textbf{lab\_2} файл \textbf{/bin/cat} під назвою \textbf{my\_cat}.
+        \item За допомогою файлу \textbf{my\_cat}, що знаходиться в каталозі \textbf{lab\_2}, перегляньте уміст файлу \textbf{.profile} (ви знаходитесь у домашньому каталозі).
+        \item Перегляньте список файлів у каталозі \textbf{lab\_2}. Потім перегляньте список усіх файлів, включаючи приховані, з
+        повною інформацією про файли. Зверніть увагу на права доступу, власника, дату модифікації файлу, що ви тількино скопіювали. 
+        Потім перегляньте цю інформацію про оригінальний файл (той, який копіювали) і порівняйте два результати.
+        \item Змініть права доступу до файлу \textbf{my\_cat} так, щоб власник міг тільки читати цей файл.
+        \item Переконайтеся в тому, що ви зробили ці зміни і повторіть п.3.
+        \item Визначте права на файл \textbf{my\_cat} таким чином, щоб ви могли робити з файлом усе, що завгодно, а всі інші — нічого не могли робити.
+        \item Поверніться в домашній каталог. Змініть права доступу до каталогу \textbf{lab\_2} так, щоб ви могли його тільки читати.
+        \item Спробуйте переглянути простий список файлів у цьому каталозі. Спробуйте переглянути список файлів з повною інформацією про них. Спробуйте запустити і видалити
+        файл \textbf{my\_cat} з цього каталогу.
+        \item Поясніть отримані результати. Результати виконання п.8 можуть бути різними в різних версіях UNIX, зокрема, Linux і FreeBSD. Прокоментуйте отримані результати у
+        висновках.
+        \item За допомогою команди \textbf{su <user name>}, завантажтесь в систему, користуючись обліковим записом іншого користувача. (Вам потрібно знати пароль цього
+        користувача.) Спробуйте отримати доступ до Вашого каталогу \textbf{lab\_2}. Перевірте, чи правильно зроблено завдання попереднього пункту. Створіть каталог \textbf{lab\_2\_2}.
+        \item Знову завантажтесь в систему, користуючись своїм обліковим записом. Спробуйте зробити власником каталогу \textbf{lab\_2} іншого користувача. Спробуйте зробити 
+        себе власником каталогу \textbf{lab\_2\_2}. Поясніть результати.
+        \item Зайдіть у каталог \textbf{lab\_2}. Зробіть так, щоб нові створені файли і каталоги діставали права доступу згідно Таблиці. Створіть новий файл і каталог і переконайтеся в
+        правильності ваших установок. Права для файлів \textbf{<<644>>}. Права для каталогів \textbf{<<745>>}.
+    \end{enumerate}
+
+\newpage
+    \begin{enumerate}
+    \item[14.] Поверніть собі права читати, писати, та переглядати вміст каталогів.
+    \item[15.] Створіть у каталозі \textbf{lab\_2} каталог \textbf{acl\_test} та у ньому файли \textbf{file1}, \textbf{file2}. Після час створення \textbf{file1} додайте у 
+    нього довільний текст.
+    \item[16.] Виведіть ACL для \textbf{file1}.
+    \item[17.] Змінить права доступу на \textbf{file1} так, щоб тільки власник мав право на читання.
+    \item[18.] Увійдіть до системи під іншим обліковим записом та спробуйте прочитати вміст \textbf{file1}. Що отримаємо? Поверніться до свого облікового запису.
+    \item[19.] За допомогою команди \textbf{setfacl} додайте право на читання іншому обраному користувачу для \textbf{file1}. Перевірте, що створився новий ACL для \textbf{file1}.
+    \item[20.] Увійдіть до системи під іншим обліковим записом та спробуйте прочитати вміст \textbf{file1}. Що отримаємо? Поверніться до свого облікового запису.
+    \item[21.] За допомогою команди \textbf{setfacl} встановіть значення маски таким чином щоб дозволити читати вміст \textbf{file1} іншому користувачу. Виведіть ACL для \textbf{file1}.
+    \item[22.] Увійдіть до системи під іншим обліковим записом, та спробуйте прочитати вміст \textbf{file1}. Ви повинні мати таку змогу.
+    \end{enumerate}
+
+\newpage
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{1}}
+    \end{center}
+    Створіть каталог \textbf{lab\_2}.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=0.5\linewidth]{Prt sc/Figure_1.png}  
+        \end{minipage}
+    \end{figure}
+
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{2}}
+    \end{center}
+    Скопіюйте в каталог \textbf{lab\_2} файл \textbf{/bin/cat} під назвою \textbf{my\_cat}.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=0.6\linewidth]{Prt sc/Figure_2.png}  
+        \end{minipage}
+    \end{figure}
+
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{3}}
+    \end{center}
+    За допомогою файлу \textbf{my\_cat}, що знаходиться в каталозі \textbf{lab\_2}, перегляньте уміст файлу \textbf{.profile} (ви знаходитесь у домашньому каталозі).
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=0.7\linewidth]{Prt sc/Figure_3.png}  
+        \end{minipage}
+    \end{figure}
+
+\newpage
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{4}}
+    \end{center}
+    Перегляньте список файлів у каталозі \textbf{lab\_2}. Потім перегляньте список усіх файлів, включаючи приховані, з
+    повною інформацією про файли. Зверніть увагу на права доступу, власника, дату модифікації файлу, що ви тількино скопіювали. 
+    Потім перегляньте цю інформацію про оригінальний файл (той, який копіювали) і порівняйте два результати.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=0.6\linewidth]{Prt sc/Figure_4.png}  
+        \end{minipage}
+    \end{figure}
+
+\end{document}
