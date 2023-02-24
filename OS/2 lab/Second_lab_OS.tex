@@ -294,5 +294,95 @@
             \includegraphics[width=0.6\linewidth]{Prt sc/Figure_16.png}  
         \end{minipage}
     \end{figure}
+
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{17}}
+    \end{center}
+    Змінить права доступу на \textbf{file1} так, щоб тільки власник мав право на читання.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=0.6\linewidth]{Prt sc/Figure_17.png}  
+        \end{minipage}
+    \end{figure}
+
+\newpage
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{18}}
+    \end{center}
+    Увійдіть до системи під іншим обліковим записом та спробуйте прочитати вміст \textbf{file1}. Що отримаємо? Поверніться до свого облікового запису.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=0.6\linewidth]{Prt sc/Figure_18.png}  
+        \end{minipage}
+    \end{figure}
+
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{19}}
+    \end{center}
+    За допомогою команди \textbf{setfacl} додайте право на читання іншому обраному користувачу для \textbf{file1}. Перевірте, що створився новий ACL для \textbf{file1}.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=0.6\linewidth]{Prt sc/Figure_19.png}  
     
+        \end{minipage}
+    \end{figure}
+
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{20}}
+    \end{center}
+    Увійдіть до системи під іншим обліковим записом та спробуйте прочитати вміст \textbf{file1}. Що отримаємо? Поверніться до свого облікового запису.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=0.6\linewidth]{Prt sc/Figure_20.png}  
+        \end{minipage}
+    \end{figure}
+
+\newpage
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{21}}
+    \end{center}
+    За допомогою команди \textbf{setfacl} встановіть значення маски таким чином щоб дозволити читати вміст \textbf{file1} іншому користувачу. Виведіть ACL для \textbf{file1}.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=0.6\linewidth]{Prt sc/Figure_21.png}  
+        \end{minipage}
+    \end{figure}
+
+    \begin{center}
+        \Large{Task \RomanNumeralCaps{22}}
+    \end{center}
+    Увійдіть до системи під іншим обліковим записом, та спробуйте прочитати вміст \textbf{file1}. Ви повинні мати таку змогу.
+    \begin{figure}[h!]
+        \begin{minipage}[h]{1\linewidth}
+            \centering
+            \includegraphics[width=0.6\linewidth]{Prt sc/Figure_22.png}  
+        \end{minipage}
+    \end{figure}
+
+    \begin{center}
+        \Large{Висновки}
+    \end{center}
+    
+    З огляду вивченого матеріалу, використання команд: <<ls –l>>, <<chmod>>, <<chown>>, <<umask>>, <<setfacl>> та <<getfacl>> є незамінною частиною 
+    розмежування прав доступу до файлів і керування ними.
+
+    UNIX реалізує дискреційну модель розмежування доступу, тому для кожного файлу визначається, які права мають всі користувачі на доступ до файлу.
+    З цього випливає легкість адміністрування і повний контроль доступу до кожного окремого файлу для всіх можливих користувачів. 
+    
+    Перед встановленням прав доступу потрібно чітко розуміти можливе застосування цього файлу іншими користувачами та вже наявні права доступу.
+    Тому, щоб створювати нові файли вже по наявному шаблону можна задати маску для всіх нових файлів та директорій за домопогою команди <<umask>>. 
+    Переглняути інформацію з таблиці індексних дескрипторів можна командою <<ls –l>>. 
+
+    В окремих випадках, для вже створеного файлу або директорії, права доступу можна редагувати командою <<chmod>>. 
+    Команда <<chown>> змінює власника даного файлу або папки, яким може бути користувач або група. 
+
+    Команда <<setfacl>> в Linux використовується для встановлення списків керування доступом (ACL) до файлів. 
+    ACL файлу визначає користувачів і групи, яким дозволено доступ до файлу, а також дозволи, які вони мають. 
+    Команду <<setfacl>> можна використовувати для додавання, видалення або зміни ACL файлу. Для перегляду ACL використовують <<getfacl>>.
+
 \end{document}
