@@ -1,0 +1,95 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[english,ukrainian,russian]{babel}
+\linespread{1}
+\usepackage{ucs}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[paper=portrait,pagesize]{typearea}
+\usepackage{amsmath}
+\usepackage{bigints}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{cancel}
+\usepackage{gensymb}
+\usepackage{multirow}
+\usepackage{rotate} 
+\usepackage{pdflscape}
+\usepackage{bigstrut}
+\usepackage[pageanchor]{hyperref}
+\usepackage{chngpage}
+\usepackage{fancybox,fancyhdr}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\RomanNumeralCaps}[1]{\MakeUppercase{\romannumeral #1}}
+\usepackage[left=20mm, top=20mm, right=15mm, bottom=15mm, nofoot]{geometry}
+
+
+\begin{document}
+    \pagestyle{fancy}
+    \fancyhead{}
+    \fancyhead[R]{ФІ-12 Завалій Олександр}
+    \begin{center}
+        \large{\textbf{Міністерство освіти і науки України\\
+                Національний технічний університет України\\
+                «Київський політехнічний інститут імені Ігоря Сікорського»\\
+                Навчально-науковий Фізико-технічний інститут}}\\
+        \hfill \break \hfill \break \hfill\break \hfill \break \hfill \break \hfill \break \hfill \break
+        \hfill \break \hfill \break \hfill \break
+        \begin{center}
+            \normalsize{\textbf{ОПЕРАЦІЙНІ СИСТЕМИ\\
+            Комп’ютерний практикум\\
+            Робота №3}}
+        \end{center}
+    \end{center}
+    \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break
+    \hfill \break \hfill \break \hfill \break \hfill \break 
+    \begin{flushright}
+        \large{ \hspace{35pt} Виконав:\\
+            студент групи ФI-12\\
+            Завалій Олександр\\} 
+        \large{ \hspace{35pt} Перевірив:\\
+        Кірієнко О.В.} 
+    \end{flushright}
+    \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break \hfill \break
+    \hfill \break
+    \begin{center} \textbf{Київ-2023} \end{center}
+    \thispagestyle{empty}
+
+\newpage
+    \begin{center}
+        \section*{\bfseries{Робота №3.\\
+        Командна оболонка shell, стандартні
+        потоки введення/виведення, фільтри і конвеєри}}
+    \end{center}
+    \textbf{Мета:} \\
+    \hangindent=1.5cm 
+    \hangafter=+1 \noindent
+    Оволодіння практичними навичками
+    перенаправлення стандартних потоків, роботи з
+    фільтрами і організації конвеєрів \\
+    \begin{center}
+        \Large{Варіант №5}
+    \end{center}
+    Зміст індивідуального завдання:
+    \begin{enumerate}
+        \item Перейдіть у каталог \textbf{/bin}. Перегляньте список усіх файлів, що починаються із символу \textbf{<<f>>}.
+        \item Перегляньте список файлів, імена яких складаються з визначеної у таблиці індивідуальних завдань кількості символів.\textbf{<<2>>}.
+        \item Перегляньте список файлів, імена яких починаються із символів \textbf{<<q, r, s, t>>}. Зробіть це декількома способами.
+        \item Створіть у вашому домашньому каталозі підкаталог \textbf{lab\_3} і перейдіть в нього.
+        \item За допомогою команди \textbf{cat} створіть файл \textbf{my\_text} і запишіть у нього кілька рядків. Потім за допомогою команди \textbf{cat} 
+        допишіть у нього ще кілька рядків.
+        \item Підрахуйте кількість файлів у каталозі \textbf{/var}, використовуючи і не використовуючи конвеєри. Порівняйте результат.
+        \item Підрахуйте кількість файлів у каталозі \textbf{/var}, при цьому зберігши список файлів у файлі \textbf{filelist}, використовуючи команду \textbf{tee}.
+        \item Починаючи з вашого домашнього каталогу, виведіть на екран у повному форматі назви усіх файлів і каталогів, що починаються з \textbf{"m"}. 
+        При цьому перед виведенням кожної назви на екран повинен виводитися запит на його підтвердження.
+        \item Починаючи з кореневого каталогу, виведіть на екран імена всіх каталогів, що останній раз змінювалися більше 15 днів назад.
+        \item Виведіть на екран тільки час, що повертається командою \textbf{date}.
+        \item Виведіть на екран список усіх користувачів системи, тобто перші поля кожного рядка файлу \textbf{/etc/passwd} (роздільник полів — символ ":").
+        \item Виведіть на екран імена усіх файлів у каталозі \textbf{/bin}, що містять слова \textbf{Software} чи \textbf{software}.
+         Потік помилок при цьому не повинний виводитися на екран.
+        \item Відсортуйте конфігураційний файл вашої оболонки \textbf{(.profile, .cshrc)} відповідно до кодової таблиці ASCII так, щоб при цьому 
+        ігнорувалися пробіли на початку рядків. Робіть це з копією файлу, щоби не порушити нормальну працездатність вашої оболонки.
+    \end{enumerate}
+
+
+\end{document}
