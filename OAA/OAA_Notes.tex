@@ -1,0 +1,840 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[english,ukrainian,russian]{babel}
+\linespread{1,2}
+\usepackage{ucs}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[paper=portrait,pagesize]{typearea}
+\usepackage{amsmath}
+\usepackage{bigints}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{cancel}
+\usepackage{gensymb}
+\usepackage{multirow}
+\usepackage{rotate} 
+\usepackage{pdflscape}
+\usepackage{bigstrut}
+\usepackage[pageanchor]{hyperref}
+\usepackage{svg}
+\usepackage{chngpage}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\newcommand{\dx}{\textbf{d}x}
+\newcommand{\dt}{\textbf{d}t}
+\newcommand{\du}{\textbf{d}u}
+\newcommand{\dv}{\textbf{d}v}
+\newcommand{\dy}{\textbf{d}y}
+\newcommand{\ds}{\textbf{d}s}
+\newcommand{\dz}{\textbf{d}z}
+\newcommand{\dr}{\textbf{d}r}
+\newcommand{\arch}{\textrm{arcch}}
+\newcommand{\arsh}{\textrm{arcsh}}
+\newcommand{\dint}{\displaystyle\int}
+\newcommand{\doint}{\displaystyle\oint}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\dsum}{\displaystyle\sum}
+\newcommand{\RomanNumeralCaps}[1]{\MakeUppercase{\romannumeral #1}}
+\setlist[enumerate]{itemsep=0.01\baselineskip}
+\usepackage[left=20mm, top=20mm, right=15mm, bottom=15mm, nohead, nofoot]{geometry}
+
+\titleformat{\section}[hang]{\normalfont\Large\bfseries}{}{0pt}{} % Видалення нумерації перед назвою розділу
+\titlespacing{\section}{0pt}{\parskip}{-\parskip} % Зміна відступу між розділами
+
+\begin{document}
+\newpage
+	\renewcommand*\contentsname{Contents}
+	\tableofcontents
+
+\newpage
+    \begin{center}
+        \hrulefill
+        \section{Лекція №1}
+        \hrulefill
+    \end{center}
+    \subsection{Інтуітивні визначення}
+    \textbf{Алгоритм} - чітка скінченна однозначно визначена послідовніть(порядок) дій/кроків,
+    яка призводить до очікуваного результату. \\
+    \textbf{Властивості алгоритмів:}
+    \begin{itemize}
+        \item Коректність (алгоритм розв'язує те, що трбеа і правильно)
+        \item Ефективність (скільки ресурсів буде витрачати алгоритм)
+    \end{itemize}
+    \textbf{Позначення:} \\
+    $x$ - якась задача з параметрами. \\
+    $T(x)$ - часова складність (к-ть кроків які зробить алгоритм, щоб розв'язати певну задачу). \\
+    $S(x)$ - просторова складність (це к-ть додаткової пам'яті, щоб завершити алгоритм). \\
+    $n=|x|$ - розмір вхідних даних. \\
+    \textbf{Складність буває:}
+    \begin{enumerate}
+        \item У найгіршому випадку $T(n)=\underset{x,\:|x|=n}{\max} T(x)$
+        \item У середньому $\overline{T}(n)=\dsum\limits_{x:\:|x|=n}^{}Pr(x)T(x)$ \\
+        $Pr(x)$ - ймовірність отримати складність $x$.
+        \item Майже завжди: майже $\forall x:\: T(x)=T_n$
+    \end{enumerate} 
+    
+    \subsection{Бітова та арифметична складність}
+    \textbf{Бітові операції} \\
+    Архітектури працюють з регістрами = двійкові вектори фік. довжини $n$ ($n=16,\:32,\:64\dots$) \\
+    Бітові (логічні) операції: $\vee$, $\wedge$, $\oplus$, $\gg$, $\ll$, $\ggg$, $\lll$. \\
+    Кожна операція реалізується окремим вентелем (gate) $\longrightarrow$
+    складність реалізації булевої функції = к-ть гейтів. \\
+    Рівнем вище можна вважати, що бітова операція над регістром атомарна. \\
+    Бітова складність = к-ть бітових операцій, яку виконує алгоритм. \\
+    \textbf{Арифметичні операції} \\
+    $x=(x_{n-1},\dots,x_1,x_0)=x_0+2x_1+4x_2+...+2^{n-1}x_{n-1}$; $x_i=\{0,\:1\}$ \\
+    Арифметичні операції: $+\mod2^n$, $-\mod2^n$, $\cdot\mod2^n$, $\div\mod2^n$, порівняння. \\
+    Зазвичай бітова складність ариф. операцій $\thicksim n^{const}$ \\
+    Адитивна складність: $+,\:-,\:vs$ \\
+    Мультиплікативна складність: $\cdot$ \\
+
+\newpage
+    \textbf{Оцінювання ефективності:}
+    \begin{enumerate}
+        \item Вибір множини базових операцій.
+        \item Підрахунок / оцінювання к-ті операцій.
+        \item Обмеження часу роботи у конкретному обчисл. середовищі.
+    \end{enumerate}
+    \textbf{Додавання у стовпчик.} \\
+    \textbf{Лема:} $\forall i:C_i\in\{0,\:1\}$ \\
+    У найгіршому випадку $T(n)=1+2(n-1)=2n-1$ - додавань цифр. \\
+    У найкращому випадку $T(n)=n\Rightarrow n\leqslant T(n)\leqslant2n-1$
+
+    \subsection{Схема Горнера}
+    $p(x)=a_nx^n+a_{n-1}x^{n-1}+...+a_2x^2+ax+a_0$ \\
+    Метод грубої сили: $1+2+...+n=\dfrac{n(n+1)}{2}$ множень чисел. \\
+    Горнер: $p(x)=(((a_nx+a_{n-1})x+a_{n-2})x+...+a)x+a_0 \Rightarrow n$ множень чисел. \\
+    $x^a=x^{a_0+2a_1+2^2a_2+...+2^ta_t}=x^{a_0}\cdot(x^2)^{a_1}\cdot(x^{2^2})^{a_2}\cdot...\cdot(x^{2^t})^{a_t}$ \\
+    Найгірший випадок $2t$. \\
+    Середнє $t+\dfrac{1}{2}(t-1)+1=\dfrac{3}{2}t-\dfrac{1}{2}$; $T(t)=\Theta(t)$ \\
+    $x^a=(...(((x^{a_t})^2x^{a_{t-1}})^2x^{a_{t-2}})^2...)x^0$ 
+
+    \subsection{Числа Фібоначі}
+    $f_0=0$, $f_1=1$, $f_{n+2}=f_{n+1}+f_n$, $n\geqslant 0$ \\
+    \textbf{Метод грубої сили} \\
+    Алгоритм обчислення числа фібоначі: $A1(n)\longrightarrow f_n$
+    \begin{enumerate}
+        \item Якщо $n=0$ - повернути $0$.
+        \item Якщо $n=1$ - повернути $1$.
+        \item Інакше $n=0$ - повернути $A1(n-1)+A1(n-2)$.
+    \end{enumerate}
+    $T(n)=T(n-1)+T(n-2)+3$, $n\geqslant2$ \\
+    $T(0)=1$, $T(1)=2\Rightarrow T(n)\geqslant f_n$ \\
+    \textbf{Ідея "динамічного програмування"}
+    \begin{enumerate}
+        \item $f[0]=0$, $f[1]=1$
+        \item Для всіх інших від $2$ до $n$: $f[i]=f[i-1]+f[i-2]$
+        \item Повторюємо $f[n]$
+    \end{enumerate}
+    $T(n)=n-2$
+
+\newpage
+    \textbf{Формула Біне} \\
+    $f_n=\dfrac{1}{\sqrt{5}}\biggl(\biggl(\dfrac{1+\sqrt{5}}{2}\biggr)^n-\biggl(\dfrac{1-\sqrt{5}}{2}\biggr)^n\biggr)$ \\
+    $T(n)=2\log_2n+2\log_2n+1=4\log_2n+1$ - Множення ірраціональних чисел. \\
+    \textbf{Матриці} \\
+    $\mathbf{Q}= 
+    \begin{bmatrix}
+        1 & 1 \\
+        1 & 0 \\
+    \end{bmatrix}$ \\
+    $\mathbf{Q^n}= 
+    \begin{bmatrix}
+        f_{n+1} & f_n \\
+        f_n & f_{n-1} \\
+    \end{bmatrix}$ \\
+    $T(n)=2\log_2n$ - множень матриці. \\
+    $32\log_2n$ - множень цілих чисел.
+
+    \begin{center}
+        \hrulefill
+        \section{Лекція №2}
+        \hrulefill
+    \end{center}
+    \subsection{Cимволи Ландау та нотація Кнута}
+    $f,g:\:\mathbb{N} \rightarrow \mathbb{R}$ \\
+    $f=o(g)\Leftrightarrow\lim\limits_{n\rightarrow\infty}\dfrac{f(n)}{g(n)}=0$ \\
+    $f=\mathsf{O}(g)\Leftrightarrow\exists C>0,n_0\in\mathbb{N},\forall n\geqslant n_0:\:|f(n)|\leqslant C\cdot|g(n)|$ \\
+    $f=\omega(g)\Leftrightarrow\lim\limits_{n\rightarrow\infty}\dfrac{f(n)}{g(n)}=\infty$ або $g=o(f)$ \\
+    $f=\Omega(g)\Leftrightarrow\exists C>0,n_0\in\mathbb{N},\forall n\geqslant n_0:\:|f(n)|>C|g(n)|$ або $g=\mathsf{O}(f)$ \\
+    $f=\Theta(g)\Leftrightarrow\exists C_1,C_2>0,n_0\in\mathbb{N},\forall n\geqslant n_0:\:C_1|g(n)|\leqslant|f(n)|\leqslant C_2|g(n)|$ \\
+    $f\thicksim g\Leftrightarrow\lim\limits_{n\rightarrow\infty}\dfrac{f(n)}{g(n)}=1$ або $f(n)=g(n)+o(g(n))$ \\
+    $\dsum\limits_{k=1}^{n}\Theta(f(k))\ne\Theta(f(1))+\Theta(f(2))+...+\Theta(f(n))$ \\
+    $\Theta(1)$ або $\mathsf{O}(n)$ - const. \\
+    $o(1)$ - нескінченно мала функція. \\
+    \textbf{Твердження:} $\lim\limits_{n\rightarrow\infty}\bigg|\dfrac{f(n)}{g(n)}\bigg|=C$; $0<C<\infty\Rightarrow f=\Theta(g)$ \\
+    
+    $\left.
+        \begin{array}{ccc}
+            f(n)=n\sin(n) \\
+            g(n)=n  \\
+        \end{array}
+    \right\}\Rightarrow f=\mathsf{O}(g)$ \\
+    \textbf{Твердження:} $f=\mathsf{O}(g),\forall n\in\mathbb{N},g(n)\ne0\Rightarrow
+    \exists C>0,\forall n\in\mathbb{N}:\:|f(n)|\leqslant C|g(n)|$ \\
+    Наслідок: $\Omega$ та $\Theta$ аналогічно. \\
+    \textbf{Твердження:} $\Lambda\in\{\mathsf{O},\Omega,\Theta\},\:$ $f,g>0,\:$ $f=\Lambda$ \\
+    Для $h:\:\mathbb{N}\rightarrow\mathbb{N}$ нехай $F(n)=\dsum\limits_{k=1}^{h(n)}f(k)$, $G(n)=\dsum\limits_{k=1}^{h(n)}g(k)$. \\
+    Тоді $F=\Lambda(G)$ 
+
+\newpage
+    \subsection{Iєрархія функцій за швидкістю росту}
+    \textbf{Твердження:} Нехай маємо поліном $p(x)=a_nx^n+a_{n-1}x^{n-1}+...+a_2x^2+ax+a_0$;
+    $a_n\ne0$, $x\rightarrow\infty$. \\
+    Тоді:
+    \begin{enumerate}
+        \item $p(x)\in\Theta(x^n)$ \\
+        $p(x)\thicksim a_nx^n$
+        \item $p(x)=o(x^t)$, $\forall t>n$. Поліном домінується.
+        \item $p(x)=o(e^x)$. Поліном домінується.
+        \item $p(\ln,x)=o(x^t)$, $\forall t>0$. Поліном домінується.
+    \end{enumerate}
+    \textbf{Теорема (про ієрархію функцій)} \\
+    Нехай $0<\varepsilon<1$, $C>1$, $n\in\mathbb{N},n\rightarrow\infty$ \\
+    Тоді: \\
+    $\varepsilon^n\prec C\prec \ln(\ln(n))\prec\ln(n)\prec n^\varepsilon\prec n \prec n^C \prec C^n \prec n! \prec n^n\prec C^{C^n}$ \\
+    $\prec$ - домінація. \\
+    Які можуть бути оцінки складності.
+    \begin{enumerate}
+        \item $T(n)=\Theta(f(n))\:$, $\biggl(=\mathsf{O}(f(n)),\:=\Omega(f(n))\biggr)$
+        \item $T(n)=f(n)+o(f(n))$ або $T(n)\thicksim f(n)$
+        \item $T(n)=f(n)+\Theta(g(n))$
+    \end{enumerate}
+    \textbf{Класи алгоритмів за часовою складністю:}
+    \begin{enumerate}
+        \item Поліноміальні: $T(n)=\Theta(n^C)$
+        \item Експоненційні: $T(n)=\Theta(C^n)\:$ $\biggl(\Theta(C^{pol(n^y)})\biggr)$
+        \item Субекспоненційні: $n^2\prec T(n)\prec C^n$
+    \end{enumerate}
+    \textbf{За просторовою складністю:}
+    \begin{enumerate}
+        \item Константні: $S(n)=\Theta(1)$
+        \item Логарифмічні: $S(n)=\Theta(\ln(n))$
+        \item Поліноміальні: $S(n)=\Theta(n^C)$
+    \end{enumerate}
+    Оцніка $f(n)=\mathsf{O(g)}$ точно, якщо $\exists$ послідовніть $n(_k),\:k\in\mathbb{N}$,
+    яка нескінченно зростає, що:
+    $\left.
+        \begin{array}{ccc}
+            \varphi=f(n_k) \\
+            \psi=g(n_k)   \\
+        \end{array}
+    \right\}\Rightarrow\varphi(n_k)=\Omega(\psi(k))\: \biggl(\Rightarrow\varphi(k)=\Theta(\psi(k))\biggr)$ \\
+    \textbf{Твердження} $f=\mathsf{O}(g)$ - точна оцінка $\Leftrightarrow f(n)\ne o(g)$ \\
+    
+\newpage
+    \textbf{Алгоритми факторизації} \\
+    Задача: $N\in\mathbb{N}$. Знайти $d|N$, $1<d<N$ або  сказати, що $N$ просте. (| - ділення)\\
+    \begin{enumerate}
+        \item Сито Ератосфена. \\
+        Перебираємо $d$ від $2$ до $\dfrac{N}{2}$ та перевіряємо $N\vdots d$? \\
+        $T(n)=\dfrac{N}{2}-1=\Theta(N)$ \\
+        $n=\log_2N=T(n)=\Theta(2^n)$
+        \item Уточнення Фібоначі. \\
+        \textbf{Лема:} $N=a\cdot b\Rightarrow\min\{a,\:b\}\leqslant\sqrt{N}\leqslant\max\{a,\:b\}\Rightarrow$ 
+        Перебираємо $d\leqslant\sqrt{N}\Rightarrow T(n)=\\=\Theta(\sqrt{N}) \biggl(T(n)=\Theta(2^{n/2})\biggr)$
+        \item 1974: Алгоритм Лемана $T(N)=\Theta(\sqrt{N})$ \\
+        1975: Алгоритм Шенкса $T(N)=\Theta\sqrt[4]{N}$
+    \end{enumerate}
+    \textbf{Нотація Ленстри} \\
+    $L_N[\alpha,\:C]=e^{(C+o(1))(\ln(N))^\alpha(\ln(\ln(n)))^{1-\alpha}}$, де $C>0\:$, $0\leqslant\alpha\leqslant1$ \\
+    Якщо $\alpha=0\Rightarrow$ поліноміальна. \\
+    Якщо $\alpha=0\Rightarrow$ експоненційна. \\
+    Якщо $\alpha_1<\alpha_2\Rightarrow L_N[\alpha_1,\:C_1]=o(L_N[\alpha_2,\:C_2])$ \\
+    1981: Метод квадратичного сита $T(N)=L_N\biggl[\dfrac{1}{2},\:1\biggr]$. Доведена оцінка. \\
+    1991-93: Метод сита числового поля $T(N)=L_N\biggl[\dfrac{1}{3},\:\biggl(\dfrac{64}{9}\biggr)^3\biggr]$
+
+\newpage
+    \begin{center}
+        \hrulefill
+        \section{Лекція №3}
+        \hrulefill
+    \end{center}
+    \subsection{Коректність алгоритмів}
+    Алгоритм коректний:
+    \begin{enumerate}
+        \item Завершує роботу за скінченний час (завершуваність).
+        \item Результат роботи = розв'язок поствленої задачі.
+    \end{enumerate}
+    Методи доведення коректності:
+    \begin{enumerate}
+        \item Інваріант алгоритму: певна величина / функція / об'єкт / твердження, які:
+        \begin{enumerate}
+            \item Перед початком роботи він є коректним. 
+            \item Якщо перед довільним кроком є істинним $\Rightarrow$ після виконання також є істинним.
+            \item Після завершення алгоритму істинність інваріанту показує розв'язок задач.
+        \end{enumerate}
+        = інваріант циклу.
+        \item Напівінваріант алгоритму - функції, які монотонно спадають під час роботи алгоритму.
+    \end{enumerate}
+    \textbf{Приклади:}
+    \begin{enumerate}
+        \item Сортування вставками.
+        \item Алгоритм Евкліда. \\
+        $d=\gcd(a, b)$, $a\geqslant b$ \\
+        $\forall i:\:d=\gcd(r_{i-1},r_i)$ \\
+        $f(i)=r_{i+1}$
+        \item 
+        \begin{enumerate}
+            \item Поки $n>3$ виконувати:
+            \item \tab Якщо $n\vdots2$, то $n=\dfrac{n}{2}+1$
+            \item \tab \tab інакше $n=n+1$ \\
+            $f(n)=n-(-1)^n$ - монотонно спадає
+        \end{enumerate}
+        \begin{enumerate}
+            \item Поки $n>1$ виконувати:
+            \item \tab Якщо $n\vdots2$, то $n=\dfrac{n}{2}$
+            \item \tab \tab інакше $n=3n+1$
+        \end{enumerate}
+    \end{enumerate}
+    
+ \newpage
+    \subsection{Складність у найгіршому випадку}
+    Алгоритм $A$, який за входом $x$ обчислює $y=A(x)$. \\
+    Нехай $C_A^T(x)$ - часові витрати, $C_A^S(x)$ - витрати за пам'ятю. \\
+    Визначимо певну метрику $||x||$ (розмір входу) і шукаємо 
+    оцінки виду $C_A^*(x)\leqslant f_*(||x||)$ \\
+    $x_n=\{x:||x||=n\}$ \\
+    Складність $A$ у найгіршому випадку $T_A(n)=\max\limits_{x\in X_n}C_A^T(x)$ \\
+    Зауваження:
+    \begin{enumerate}
+        \item 
+        $\left.
+            \begin{array}{ccc}
+                C_A^T\textrm{ = к-ть певних операцій }  \\
+                C_A^S\textrm{ = к-ть значень, які зберігаються } \\
+            \end{array}
+        \right\}$ цілочисельні.
+        \item Не враховуємо накладні витрати.
+        \item $C_A^T$ залежить від витрат базових операцій.
+        \item $T_1(n)<T_2(n)\nRightarrow \forall x:C_1^T(x)<C_2^T(x)$
+        \item $A(x)=A_2(A_1(x))\nRightarrow T(n)=T_1(n)+T_2(n)$
+        \item $T'(n),\:T''(n)$ - складність за різними операціями $\Rightarrow T(n)\leqslant T'(n)+T''(n)$ 
+    \end{enumerate}
+    \textbf{Приклади:}
+    \begin{enumerate}
+        \item Сортування вставками: \\
+        Варіант 1: порівнюємо $x_i$ з $x_{i-3},x_{i-2},...,x_1$ \\
+        Варіант 2: порівнюємо $x_i$ з $x_1,x_2,...,x_{i-1}$ \\
+        Найгірший випадок: $x_1>x_2>...>x_n$ \\
+        $T_1'(n)=T_1''(n)=1+2+...+n-1=\dfrac{n(n-1)}{2}$ \\
+        $T_1(n)=n(n-1)$
+        \item К-ть порівнянь $=
+        \begin{cases}
+            k,\: k<i \\
+            k-1,\: k=i
+        \end{cases}$ \\
+        Найгірший випадок: $x_1<x_2<...<x_n$ \\
+        К-ть обмінів: $i-k$  \\
+        Найгірший випадок: $x_1>x_2>...>x_n$ \\
+        $T_2''(n)=\dfrac{n(n-1)}{2}$ 
+    \end{enumerate}
+    Сумарна к-ть операцій: $
+        \begin{cases}
+            i,\: k<1 \\
+            i-1,\: k=i
+        \end{cases}$ \\
+    Найгірший випадок: $x_1>x_2>...>x_n$ \\
+    $T_2(n)=\dsum\limits_{i=2}^{n}i=\dfrac{n(n+1)}{2}-1=\dfrac{n^2+n-2}{2}$ \\
+    $\dfrac{T_1(n)}{T_2(n)}=\dfrac{n^2-n}{\frac{n^2+n-2}{2}}\rightarrow 2$
+ 
+\newpage
+    \subsection{Складність у середньому} 
+    Нехай на $X_n$ задано розподіл $p_n(x)$. \\ Тоді складність алгоритму $A$ у середньому: 
+    $\overline{T}_A(n)=\dsum\limits_{x\in X_n}p_n(x)\cdot C_A^T(x)$ \\
+    Зауваження:
+    \begin{enumerate}
+        \item $\overline{T}_A(n)\leqslant T_A(n)$
+        \item Якщо $\overline{T}'(n)$, $\overline{T}''(n)$ - складність за різними операціями,
+        $\overline{T}(n)=\overline{T}'(n)+\overline{T}''(n)$
+        \item Складність у середньому не завжди адекватно відображає складність алгоритму.
+    \end{enumerate}
+    \textbf{Приклади:}
+    \begin{enumerate}
+        \item Сортування вставками. \\
+        $\overline{T}'(n)$ - сер. к-ть порівнянь. \\
+        Нехай $\xi_i$ - витрати на кроці $i$, $i=\overline{2,n}$
+        $\Rightarrow \overline{T}'(n)=M(\xi_2+\xi_3+...+\xi_n)=\dsum\limits_{i=2}^{n}M(\xi_i)$ \\
+    \end{enumerate}
+    Нехай $H_{u,v}$ - подія у перестановці $(x_1,...,x_n)$ серед елементів $x_1,...,x_{v-1}$
+    рівно $u$ елементів меньші за $x_v$.
+    \begin{enumerate}
+        \item Обираємо $x_1,...,x_v$ - $C_n^k$ варіантів.
+        \item $x_v$ - елемент номер $u+1$ за зростанням. \\
+        $x_1,...,x_{v-1}$ - представлень як завгодно $(v-1)!$
+        \item $x_{v+1},...,x_n$ - $(n-v)! \Rightarrow$ к-ть $C_n^k(v-1)!(n-v)!=\dfrac{n!}{v}\Rightarrow Pr\{H_{u,v}\}=\dfrac{1}{v}$
+    \end{enumerate}
+    $N_{k,i}$ - к-ть порівнянь, якщо $x_i$ потрібно поставити на $k$. \\
+    $N_{k,i}=\begin{cases}
+        i-k+1,\: k>1 \\
+        i-1,\: k=1
+    \end{cases}$ \\
+    $M\xi_i=\dsum\limits_{k=1}^{i}N_{k,i}\cdot Pr\{H_{k,i}\}=\dfrac{1}{i}\Biggl((i-1)+\dsum\limits_{k=2}^{i}(i-k+1)\Biggr)=
+    \dfrac{1}{i}((i-1)+1+2+3+...+(i-1))=\\=\dfrac{1}{i}\Biggl(\dfrac{i(i+1)}{2}-1\Biggr)=
+    \dfrac{i}{2}+\dfrac{1}{2}-\dfrac{1}{i}$ \\
+    $\overline{T}'(n)=\dsum\limits_{i=2}^{n}\Biggl(\dfrac{i}{2}+\dfrac{1}{2}-\dfrac{1}{i}\Biggr)=
+    \dfrac{1}{2}\Biggl(\dfrac{n(n+1)}{2}-1\Biggr)+\dfrac{n-1}{2}-\Biggl(\dfrac{1}{2}+\dfrac{1}{3}+...+\dfrac{1}{n}\Biggr)$ \\
+    Оскільки $H_n=\ln(n)+\Theta(1)$, то $\overline{T}'(n)=\dfrac{n^2}{4}+\Theta(n)$ \\
+    Нехай $\eta_i$ - к-ть обмінів на $i$-тому кроці $\Rightarrow\xi_i<\eta_i\leqslant\xi_i+1 \Rightarrow \overline{T}''(n)=\dfrac{n^2}{4}+\Theta(n)$
+
+\newpage
+    \begin{center}
+        \hrulefill
+        \section{Лекція №4}
+        \hrulefill
+    \end{center}
+    \subsection{Нижні границі складності та оптимальні алгоритми}
+    $f(n)$ - нижня границя складності для алгоритмів  класу $\mathfrak{A}$, якщо $\forall A\in\mathfrak{A}$: $T_A(n)\geqslant f(n)$ \\
+    \textbf{Приклади:}
+    \begin{enumerate}
+        \item Пошук min/max елементу у довільному масиві. \\
+        $T(n)\geqslant n-1$ \\
+        Якщо треба min $\&$ max, то \\
+        $T(n)\geqslant \bigg\lceil \dfrac{2n}{2}\bigg\rceil-2$ 
+        \item Піднесення до степеня множенням. \\
+        $a\rightarrow a^m$ \\
+        Початок: $a$ \\
+        Середина $a^{m_1},a^{m_2},...,a^{m_t}$ \\
+        $\max\{a^{m_1},...,a^{m_t}\}$ не більше ніж подвоється. \\
+        Кінець: $a^m$ $\Rightarrow$ к-ть кроків $\geqslant\bigg\lceil \log_2m\bigg\rceil$
+        \item Сортування за рахунок порівнянь та обмінів. \\
+        Може бути реалізовано за допомогою бінарного дерева. \\
+        Складність = $\max$ висоти дерева \\
+        листів = $n!\Rightarrow 2^{T(n)}\geqslant n!\Rightarrow T(n)\geqslant \log_2n!\geqslant n\log_2n-2n$ 
+    \end{enumerate}
+    $A\in\mathfrak{A}$ - оптимальний за складністю, якщо $T_A(n)$ - нижня границя складності
+    $\forall A'\in\mathfrak{A}$ \\
+    $f(n)$ - асимптотична нижня границя для $\mathfrak{A}$, якщо $\forall A\in\mathfrak{A}:T_A(n)=\Omega(f(n))$ \\
+    Асимптотично оптимальний за складністю алгоритм. Це такий алгоритм з класу $\mathfrak{A}$ 
+    складність якого є асимптотичною нижньою границею для всіх інших алгоритмів. 
+    \subsection{Метод грубої сили}
+    Прямий підхід до розв'язування задач зазвичай застосованийна на безпосередньому формулюванні
+    задачі, її об'єктів та концепцій. \\
+    У комбінаторних задачах - метод вичерпного перебору. \\
+    \textbf{Зауваження:}
+    \begin{enumerate}
+        \item Застосовний до дуже широкого спектру задач.
+        \item Для багатьох задач дає цілком раціональні розв'язки.
+        \item Вартість розробки більш ефективного алгоритму може бути завелика, якщо задач небагато, а грубою силою вони ров'язуються за прийнятний час.
+        \item Навіть якщо М.Г.С(метод грубої сили) дає неефективний алгоритм у загальному випадку, він може бути ефективним для невеликих задач.  
+    \end{enumerate}
+
+\newpage
+    \begin{enumerate}
+        \item[5.] Може виступати еталоном складністі. 
+    \end{enumerate}
+    \textbf{Приклади:}
+    \begin{enumerate}
+        \item Пошук min елементу у масиві.
+        \item Додавання у стовпчик - цілком раціонально. \\
+        Множення у стовпчки $\Theta(n^2)$ \\
+        Але для $n\leqslant512$ бітів краще МГС (множення у стовпчик).
+        \item Задача комівояжера. \\
+        Є граф, шукаємо послідовніть вершин $V_0,V_1,...,V_{n-1}$ $V_0=V-n$. $(V_{n-1},V_n)$ - ребра. \\
+        Лобовий метод $n!$ \\
+        Фіксуємо першу вершину - $(n-1)!$ \\
+        Фіксуємо напрямок обходу - $\dfrac{(n-1)!}{2}$
+    \end{enumerate}
+
+    \subsection{Aлгоритм Карацуби}
+    \textbf{Метод декомпозиції (поділяй і володарюй).} \\
+    $X,Y$ - $Z_n$ цифрові числа. (основа $B$) \\
+    $X\cdot Y$ у стовпчик: $T_1(2n)=4n^2+\Theta(n)$ \\
+    $X=X_1\cdot B^n+X_0$, $Y=Y_1\cdot B^n+Y_0$ \\
+    $X\cdot Y=(X_1\cdot B^n+X_0)\cdot(Y_1\cdot B^n+Y_0)=
+    X_1Y_1\cdot B^{2n}+(X_1Y_0+X_0Y_1)B^n+X_0Y_0$ \\
+    $T_2(2n)=4T_1(n)+\Theta(n)=4n^2+\Theta(n)$ \\
+    $(X_1+X_0)(Y_1+Y_0)=X_0Y_0+X_1Y_1+(X_1Y_0+X_0Y_1)$ \\
+    $X\cdot Y=X_1Y_1B^{2n}+((X_1+X_0)(Y_1+Y_0)-X_0Y_0-X_1Y_1)B^n+X_0Y_0$ \\
+    $T_3(2n)=3T_1(n)+\Theta(n)=3n^2+\Theta(n)$ \\
+    $T_k(n)=\begin{cases}
+        \Theta(1),\:n=1 \\
+        3T\Biggl(\dfrac{n}{2}\Biggr)+\Theta(n),\:n>1
+    \end{cases}\Rightarrow T_k=\Theta\Biggl(n^{\log_23}\Biggr)$ \\
+    \textbf{Зауваження.} \\
+    $T_k(n)=T_k\Biggl(\bigg\lfloor\dfrac{n}{2}\bigg\rfloor\Biggr)+
+    T_k\Biggl(\bigg\lceil\dfrac{n}{2}\bigg\rceil\Biggr)+
+    T_k\Biggl(\bigg\lceil\dfrac{n}{2}\bigg\rceil+1\Biggr)+\Theta(n)$
+
+\newpage
+    \begin{center}
+        \hrulefill
+        \section{Лекція №5}
+        \hrulefill
+    \end{center}
+    \subsection{Метод декомпозиції}
+    \begin{enumerate}
+        \item Вхідна задача розбивається на підзадачі, розмір яких у рази меньший.
+        \item Підзадачі розв'язуються рекурсивно, для маленьких підзадач можна використати інший алгоритм.
+        \item Розв'язок вхідної задачі збирається з розв'язків підзадач (за необхідності).
+    \end{enumerate}
+    $\begin{cases}
+        \varphi(n), n\leqslant n_0 \\
+        a\cdot T\Biggl(\dfrac{n}{b}+f(n)\Biggr), n>n_0
+    \end{cases}$ \\
+    $n_0$ - розмір атомарних задач \\
+    $\varphi(n)$ - складность розв'язку атомарних задач \\
+    Неатомарні задачі розбиваються на $a$ підзадач розміру $\dfrac{n}{b}$ \\
+    $f(n)$ - складність збірки. \\
+    \textbf{Приклади:}
+    \begin{enumerate}
+        \item Бінарний пошук. \\
+        Вхід: відсортований масив $A$. \\
+        Вихід: Номер $a$ у $A$ або помилка. \\
+        $T(n)=\begin{cases}
+            \Theta(1), n=1 \\
+            T\Biggl(\dfrac{n}{2}\Biggr)+\Theta(1), n>1
+        \end{cases}$        
+        \item Пошук $\max$ підмасиву. \\
+        Вхід: довільний масив $A$. \\
+        Вихід: $i_{i,j}: A[i]+...A[j]\rightarrow\max$ \\
+        Груба сила: $C_n^2$ підзадач, $T(n)=\Theta(n^2)$ \\
+        Декомпозиція: \\
+        $\max A[i,j]=\max[i,k]+\max A[k+1,j]$; $i=1...k$; $j=k+1...n$ \\
+        Складність: $\Theta(n)$ \\
+        $T(n)=2T\Biggl(\dfrac{n}{2}\Biggr)+\Theta(n)$
+    \end{enumerate}
+
+\newpage
+    \subsection{Розв'язання рекурентних співвідношень методом підстановки}
+    \begin{enumerate}
+        \item Метод підстановки. \\
+        - інтуїтивно припускаємо який розв'язок і доводимо, що розв'язок саме такий. 
+    \end{enumerate}
+    \textbf{Приклади:}
+    \begin{enumerate}
+        \item $T(n)=2T\Biggl(\bigg\lfloor\dfrac{n}{2}\bigg\rfloor \Biggr)+n$, $T(1)=1$ \\
+        Припустимо: $T(n)=O(n\log_2n)\Rightarrow \exists c>0$. $T(n)\leqslant cn\log_2n$ \\
+        $T(n)=2T\Biggl(\bigg\lfloor\dfrac{n}{2}\bigg\rfloor \Biggr)+n\leqslant2c\bigg\lfloor\dfrac{n}{2}\bigg\rfloor\log\bigg\lfloor\dfrac{n}{2}\bigg\rfloor+n\leqslant
+        2c\dfrac{n}{2}(\log_2n-1)+n=cn\log_2n+n(1-c)\leqslant \\ \leqslant cn\log_2n$. При $c\geqslant1$ \\
+        Але $T(1)=1$, $n\log_2n=0\Rightarrow n_0=2$ \\
+        $T(2)=4\leqslant c2\log_2n$ \\
+        $T(3)=5\leqslant c3\log_2n \Rightarrow c\geqslant2$
+        \item $T(n)=T\Biggl(\bigg\lfloor\dfrac{n}{2}\bigg\rfloor\Biggr)+T\Biggl(\bigg\lceil\dfrac{n}{2}\bigg\rceil \Biggr)+1$ \\
+        $T(n)=O(n)\Rightarrow \exists c>0:\:T(n)\leqslant cn$ \\
+        $T(n)=T\Biggl(\bigg\lfloor\dfrac{n}{2}\bigg\rfloor\Biggr)+T\Biggl(\bigg\lceil\dfrac{n}{2}\bigg\rceil \Biggr)+1\leqslant
+        c\Biggl(\bigg\lfloor\dfrac{n}{2}\bigg\rfloor+\bigg\lceil\dfrac{n}{2}\bigg\rceil\Biggr)+1\leqslant cn+1$ \\
+        $T(n)\leqslant cn-d$, $d>0\Rightarrow T(n)\leqslant cn+1-2d\leqslant cn-d\:$, для $d\geqslant1$
+        \item $T(n)=2T(\sqrt{n})+\log_2n$ \\
+        Заміна $m=\log_2n$, $S(m)=T(2^m)$ \\
+        $T(2^m)=2T(2^{m/2})+m$ \\
+        $S(m)=2S\Biggl(\dfrac{m}{2}\Biggr)+m$ \\
+        $S(m)=O(m\log_2m)$ \\
+        $T(n)=S(\log_2n)=O(\log_2n\cdot\log_2(\log_2n))$
+    \end{enumerate}
+
+\newpage
+    \subsection{Оцінка дерева рекурсії}
+    \textbf{Приклади:} \\
+    (див. перший малюнок дерева в лекції №05-5) \\
+    1. $T(n)=3T\Biggl(\dfrac{n}{2}\Biggr)+\Theta(n)=3T\Biggl(\dfrac{n}{2}\Biggr)+cn$ \\
+    Рівень $k:\:$ $3^k$ задач. \\
+    Складність $\dfrac{cn}{2^k}$ \\
+    Ост. рівень: $n^{\log_23}$ задач складності $T(1)=\Theta(1)\Rightarrow T(n)=\dsum\limits_{k=0}^{n-1}3^k\cdot\dfrac{cn}{2^k}+\Theta(n^{\log_23})=\\=\bigg|t=\log_2n\bigg|=
+    \dfrac{cn(\frac{3}{2})^t-1}{\frac{3}{2}-1}+\Theta(n^{\log_23})=\bigg|\dfrac{3^{\log_2n}}{2^{\log_2n}}=\dfrac{n^{\log_23}}{n}\bigg|=2cn\dfrac{n^{\log_23}}{n}-2cn+\Theta(n^{\log_23})=\\=
+    \Theta(n^{\log_23})$ \\
+    (див. другий малюнок дерева в лекції №05-5) \\
+    2. $T(n)=3T\Biggl(\dfrac{n}{2}\Biggr)+\Theta(n^2)=3T\Biggl(\dfrac{n}{2}\Biggr)+cn^2$ ("поганий" Карацуба) \\
+    Рівень $k:\:$ $3^k$ задач. \\
+    Складність $\dfrac{cn^2}{4^k}$ \\
+    Ост. рівень: $n^{\log_23}$ задач складності $T(1)=\Theta(1)\Rightarrow T(n)=\dsum\limits_{k=0}^{n-1}3^k\cdot\dfrac{cn^2}{4^k}+\Theta(n^{\log_23})<\\<
+    cn^2\dsum\limits_{k=0}^{\infty}\Biggl(\dfrac{3}{4}\Biggr)^k+\Theta(n^{\log_23})=4cn^2+\Theta(n^{\log_23})=O(n^2)$ \\
+    Але: $T(n)\geqslant cn^2\Rightarrow T(n)=\Theta(n^2)$ \\
+    (див. третій малюнок дерева в лекції №05-5) \\
+    3. $T(n)=T\Biggl(\dfrac{n}{3}\Biggr)+T\Biggl(\dfrac{2n}{3}\Biggr)+\Theta(n)$ \\
+    Кожен рівень: \\
+    Складність: $\leqslant cn$ \\
+    $\max$ висота = $\log_{3/2}n$ \\
+    Тому $T(n)\leqslant cn\log_{3/2}n$ \\
+    $T(n)=O(n\log_2n)$
+
+\newpage
+    \begin{center}
+        \hrulefill
+        \section{Лекція №6}
+        \hrulefill
+    \end{center}
+    \subsection{Основна теорема методу декомпозиції}
+    Нехай $T(n)=\begin{cases}
+        \Theta(1), n\leqslant n_0 \\
+        aT\biggl(\dfrac{n}{b}\biggr)+f(n), n>n_0
+    \end{cases}$ \\
+    $a\geqslant$, $b>1$, $f(n)\geqslant0$, $\dfrac{n}{b}$ - ціле число.
+    \begin{enumerate}
+        \item Якщо $\exists\varepsilon>0: f(n)=O(n^{\log_bn-\varepsilon})$, то $T(n)=\Theta(n^{\log_ba})$
+        \item Якщо $f(n)=\Theta(n^{\log_ba})$, то $T(n)=\Theta(n^{\log_ba}\log n)$
+        \item Якщо $\exists \varepsilon>0:\: f(n)=\Omega(n^{\log_ba+\varepsilon})$
+    \end{enumerate}
+    $\exists0<c<1:\: af\Biggl(\dfrac{n}{b}\Biggr)\leqslant cf(n)\Rightarrow T(n)=\Theta(f(n))$ - Умова регулярності. \\
+    \textbf{Приклади:}
+    \begin{enumerate}
+        \item Aлгоритм Карацуби. $T(n)=3T\Biggl(\dfrac{n}{2}\Biggr)+\Theta(n)$ \\
+        $a=3$, $b=2$, $f(n)=n$, $n^{\log_ba}=n^{\log_23}\approx n^{0.58}$ \\
+        $\varepsilon=0.1$, $n=O(n^{0.580-\varepsilon})$ \\
+        $\Rightarrow$ 1й випадок: $T(n)=\Theta(n^{\log_23})$
+        \item Бінарний пошук. $T(n)=T\Biggl(\dfrac{n}{2}\Biggr)$ \\
+        $a=1$, $b=2$, $f(n)=n^0=1$, $n^{\log_ba}=n^{\log_21}=n^0$ \\
+        $\Rightarrow$ 2й випадок: $T(n)=\Theta(n^0\log n)=\Theta(\log n)$
+        \item Пошук максимального підмасиву. $T(n)=2T\Biggl(\dfrac{n}{2}\Biggr)+\Theta(n)$ \\
+        $a=2$, $b=2$, $f(n)=n$, $n^{\log_ba}=n^{\log_22}=n$ \\
+        $\Rightarrow$ 2й випадок: $T(n)=\Theta(n\log n)$ 
+        \item $T(n)=3T\Biggl(\dfrac{n}{4}\Biggr)+n\log_2n$ \\
+        $a=3$, $b=4$, $f(n)=n\log_2n$, $n^{\log_ba}=n^{\log_43}\approx n^{0.79}$ \\
+        $\forall 0<\varepsilon<0.2:\: f(n)=\Omega(n^{0.79+\varepsilon})$ \\
+        $3f\Biggl(\dfrac{n}{4}\Biggr)=3\dfrac{n}{4}\log_2\dfrac{n}{4}\leqslant\dfrac{3n}{4}\log_2n$ для $c=\dfrac{3}{4}$ \\
+        $\Rightarrow$ 3й випадок: $T(n)=\Theta(n\log_2n)$
+    \end{enumerate}
+
+\newpage
+    \begin{enumerate}
+        \item[5.] $T(n)=2T\Biggl(\dfrac{n}{2}\Biggr)+n\log_2n$ \\
+        $a=2$, $b=2$, $f(n)=n\log_2n$, $n^{\log_ba}=n^1$ \\
+        $f(n)=\Omega(n)$ \\
+        Але $\forall\varepsilon>0$: $f(n)=o(n^{1+\varepsilon})$ \\
+        $\Rightarrow$ теорема не застосовна.
+    \end{enumerate}
+    \textbf{Лема П:} $c>0$, $g(n)=1+c+c^2+...+c^n$ \\
+    Тоді $g(n)=\begin{cases}
+        \Theta(1), c<1 \\
+        n+1=\Theta(n), c=1 \\
+        \Theta(c^{n+1}), c>1
+    \end{cases}$ \\
+    $c<1:\: 1\leqslant g(n)<\dsum\limits_{k=0}^{\infty}c^k=\dfrac{1}{1-c}=const$ \\
+    $c=1:\: g(n)=n+1$ \\
+    $c>1:\: g(n)=\dfrac{c^{n+1}-1}{c-1}=\Theta(c^{n+1})$
+    \subsection{Доведення основної теореми}
+    \textbf{Доведення основної теореми:} $n=b^t$, $n_0=1$ \\
+    (див. малюнок дерева в лекції №06-1) \\
+    $t+1$ рівень $t=\log_bn$ \\
+    $k$-й рівень $a^k$ підзадач. \\
+    Складність підзадачі $f\Biggl(\dfrac{n}{b^k}\Biggr)$ або $\Theta(1)$ \\
+    Складність останнього рівня $a^t\Theta(1)=a^{\log_bn}\Theta(1)=(b^{\log_ba})^{\log_bn}\Theta(1)$ \\
+    $\Theta(1)=\Theta(n^{\log_ba})$ \\
+    $T(n)=\Theta(n^{\log_ba})+\dsum\limits_{k=0}^{t-1}a^kf\Biggl(\dfrac{n}{b^k}\Biggr)$. Позначимо $W(n)=\dsum\limits_{k=0}^{t-1}a^kf\Biggl(\dfrac{n}{b^k}\Biggr)$ \\
+    \begin{enumerate}
+        \item $f(n)=O(n^{\log_ba-\varepsilon})$ \\
+        $\Rightarrow W(n)=O\Biggl(\dsum\limits_{k=0}^{t-1}a^k\Biggl(\dfrac{n}{b^k}\Biggr)^{\log_ba-\varepsilon}\Biggr) \Rightarrow$ \\
+        $\Rightarrow n^{\log_ba-\varepsilon}\dsum\limits_{k=0}^{t-1}\Biggl(\dfrac{a}{b^{\log_ba-\varepsilon}}\Biggr)^k=n^{\log_ba-\varepsilon}\dsum\limits_{k=0}^{t-1}(b^\varepsilon)^k=n^{\log_ba-\varepsilon}\Theta(b^{\varepsilon t})=\Theta(n^{\log_ba-\varepsilon}n^\varepsilon)=\Theta(n^{\log_ba})\Rightarrow$ \\
+        $\Rightarrow W(n)=O(n^{\log_ba})$ \\
+        $T(n)=\Theta+O=\Theta(n^{\log_ba})$
+        \item $f(n)=\Theta(n^{\log_ba})$ \\
+        $\Rightarrow W(n)=O\Biggl(\dsum\limits_{k=0}^{t-1}a^k\Biggl(\dfrac{n}{b^k}\Biggr)^{\log_ba}\Biggr) \Rightarrow$ \\
+        $\Rightarrow n^{\log_ba}\dsum\limits_{k=0}^{t-1}\Biggl(\dfrac{a}{b^{\log_ba}}\Biggr)^k=n^{\log_ba}\cdot t \Rightarrow$ 
+    \end{enumerate}
+
+\newpage
+    $W(n)=\Theta(n^{\log_ba}\cdot \log n)$ \\
+    $T(n)=\Theta(n^{\log_ba})+\Theta(n^{\log_ba}\log n)=\Theta(n^{\log_ba}\log n)$
+    \begin{enumerate}
+        \item[3.] $f(n)=\Omega(n^{\log_ba+\varepsilon})$ \\
+        $W(n)\geqslant f(n)\Rightarrow W(n)=\Omega(f(n))$ \\
+        $a^kf\Biggl(\dfrac{n}{b^k}\Biggr)\leqslant c^kf(n)$, $c<1$ \\
+        $W(n)\leqslant f(n)\dsum\limits_{k=0}^{t-1}c^k=f(n)\cdot\Theta(1)\Rightarrow W(n)=O(f(n))\Rightarrow W(n)=\Theta(f(n))$ \\
+        $T(n)=\Theta(n^{\log_ba})+\Theta(f(n))=\Theta(f(n))$
+    \end{enumerate}
+    \textbf{Доведення основної теореми:} довільне $n$ \\
+    \begin{enumerate}
+        \item $T(n)=aT\Biggl(\bigg\lfloor\dfrac{n}{b}\bigg\rfloor\Biggr)+f(n)$
+        \item $T(n)=aT\Biggl(\bigg\lceil\dfrac{n}{b}\bigg\rceil\Biggr)+f(n)$
+    \end{enumerate}
+    $x\geqslant\lfloor x\rfloor>x+1$ \\
+    $x\leqslant \lceil x\rceil<x+1$ \\
+    Нехай $n_k$ - розмір задачі на рівні $k$. \\
+    $(1)\:\:\:n_k=\begin{cases}
+        n, k=0 \\
+        \bigg\lfloor\dfrac{n_{k-1}}{b}\bigg\rfloor, k\geqslant 1
+    \end{cases} \Rightarrow n_k\leqslant\dfrac{n}{b^k}$ \\
+    Якщо $t=\lfloor\log_bn\rfloor$, то $n_t\leqslant\dfrac{n}{b^{\lfloor\log_bn\rfloor}}<\dfrac{n}{b^{\log_bn-1}}=\dfrac{n}{n/b}=b$ \\
+    $\Rightarrow t+1$ - рівень у дереві рекурсії. \\
+    Складність останнього рівня $a^{\log const}\leqslant a^t\Theta(1)=a^{\lfloor\log_bn\rfloor}\Theta(1)\leqslant a^{\log const} \Rightarrow \Theta(n^{\log a})$ \\
+    $T(n)=\Theta(n^{\log_ba})+\dsum\limits_{k=0}^{t-1}a^kf(n_k)$, $t=\lfloor\log_bn\rfloor$ \\
+    $(2)\:\:\: n_k=\begin{cases}
+        n, k=0 \\
+        \bigg\lceil\dfrac{n_{k-1}}{b}\bigg\rceil, k\leqslant 1
+    \end{cases}$ \\
+    $n_0=n$ \\
+    $n_1=\bigg\lceil\dfrac{n}{b}\bigg\rceil\leqslant\dfrac{n_0}{b}+1$ \\
+    $n_2=\bigg\lceil\dfrac{n_1}{b}\bigg\rceil\leqslant\dfrac{n}{b}+1+\dfrac{1}{b}$ \\
+    $n_k\leqslant\dfrac{n}{b^k}+1+\dfrac{1}{b}+...+\dfrac{1}{b^k}<\dfrac{n}{b^k}+\dfrac{1}{1-\frac{1}{b}}=\dfrac{n}{b^k}+\dfrac{b}{b-1}$ \\
+    Для $t=\lfloor\log_bn\rfloor$ \\
+    $n_t<\dfrac{n}{b^k}+\dfrac{b}{b-1}<const$
+
+\newpage
+    \textbf{Зауваження та доповнення} \\
+    \begin{enumerate}
+        \item Якщо рекурента виду $T(n)\leqslant...\Rightarrow T(n)=O(...)$ \\
+        $T(n)\geqslant...\Rightarrow T(n)=\Omega(...)$
+        \item Спрощений вигляд основної теореми: \\
+        $T(n)=aT\Biggl(\dfrac{n}{b}\Biggr)+\Theta(n^d)\Rightarrow\begin{cases}
+            \Theta(n^d), d>\log_ba \\
+            \Theta(n^d\log n), d=\log_ba \\
+            \Theta(n^{\log_ba}), d<\log_ba
+        \end{cases}$
+        \item З умови регулярності випливає, що $f(n)=\Omega(...)$ \\
+        Дадаткові випадки:
+        \begin{enumerate}
+            \item $f(n)=\Theta(n^{\log_ba}\log^m n) (\textrm{для }m>-1) \Rightarrow T(n)=\Theta(n^{\log_ba}\log^{m+1}n)$
+            \item $f(n)=\Theta\Biggl(\dfrac{n^{\log_ba}}{\log n}\Biggr)\Rightarrow T(n)=\Theta(n^{\log_ba}\log(\log n))$
+            \item $f(n)=\Theta\Biggl(\dfrac{n^{\log_ba}}{\log^mn}\Biggr) (\textrm{для } m>1)\Rightarrow T(n)=\Theta(n^{\log_ba})$
+        \end{enumerate}
+        \item Існують узагальнення основної теореми:
+        \begin{enumerate}
+            \item теорема Аккра-Баззі \\
+            $T(n)=\dsum\limits_{i}a_iT\Biggl(\dfrac{a}{b_i}+b_i(n)\Biggr)+f(n)$
+        \end{enumerate}
+    \end{enumerate}
+
+\newpage
+    \begin{center}
+        \hrulefill
+        \section{Лекція №7}
+        \hrulefill
+    \end{center}
+    \subsection{Форми представлення поліномів}
+    \textbf{Поліноми:}
+    \begin{enumerate}
+        \item Канонічне представлення: $p(x)=a_nx^n+a_{n-1}x^{n-1}+...+a_ix+a_0$, $a_i\in \mathbb{F}(R)$, $a_n\ne0\Rightarrow \\ \Rightarrow deg(p)=n$ \\
+        $a_n=1:$ унітарний (нормований) поліном. \\
+        $p(x)\leftrightarrow (a_0,a_i,...,a_{n-1},a_n)$ \\
+        \textbf{Операції:} 
+        \begin{enumerate}
+            \item Додавання: $(n+1)$ додавання коеф. $=\Theta(n)$
+            \item Множення полінома на скаляр: $\alpha\cdot p(x)\leftrightarrow (\alpha a_0,\alpha a_1,...,\alpha a_n)\Rightarrow$ \\ 
+            $\Rightarrow(n+1)$ множення $=\Theta(n)$
+            \item Множення двох поліномів: $p(x)\cdot q(x)$, $p(x)=a_nx^n+a_{n-1}x^{n-1}+...+a_ix+a_0$, \\ 
+            $q(x)=b_nx^n+b_{n-1}x^{n-1}+...+b_ix+b_0\Rightarrow p(x)\cdot q(x)=c_0+c_1x+c_2x^2+...+c_{2n}x^{2n}$ \\
+            $C_k=\dsum\limits_{i=0}^{k}a_ib_{x-i}$ - $\leqslant k+1$ множення. \\
+            Загалом буде $\Theta(n^2)$ множень
+            \item Обчислення значення у точці. \\
+            Схема Горнера $\Rightarrow n$ множень $=\Theta(n)$
+        \end{enumerate}
+        \item Представлення поліному через корені: \\
+        $p(x)=\beta(x-z_1)(x-z_2)...(x-z_n)$ \\
+        $p(x)\leftrightarrow(\beta_1(z_1,z_2,...,z_n))$ \\
+        \textbf{Операції:} 
+        \begin{enumerate}
+            \item Додавання - ? 
+            \item Множення на скаляр: $\alpha\cdot p(x)\leftrightarrow (\alpha\beta,(z_1,...,z_n))\Rightarrow$ 1 множення.
+            \item Множення поліномів: $p(x)=\beta_1(x-z_1)...(x-z_n)$, $q(x)=\beta_2(x-t_1)...(x-z_n)$ \\
+            $p(x)\cdot q(x)=\beta_1\beta_2(x-z_1)...(x-z_n)\cdot(x-t_1)...(x-t_n)\Rightarrow$ 1 множення + об'єднання мультимножин коренів.
+            \item Обчислення значення у точці: $p(x_0)=\beta(x_0-z_1)...(x_0-z_n)\Rightarrow n$ множень. \\
+        \end{enumerate}
+        \textbf{Проблема:} не знайдено ефект. алгоритмів точного знаходження коренів поліному.
+    \end{enumerate}
+
+\newpage
+    Перехід до канонічної форми: \\
+    $(x-z_1)$ \tab \tab \tab \tab \tab \tab \tab $-z_1=a_0$, $1=a_1$ \\
+    $(x-z_1)(x-z_2)=x^2+(-z_1-z_2)x+z_1z_2$ \tab $z_1z_2=a_0$, $-z_1-z_2=a_1$, $1=a_2\Rightarrow$ + 1 множення. \\
+    $(x-z_1)(x-z_2)(x-z_3)$ \tab \tab \tab \tab $\Rightarrow$ + 2 множення. \\
+    $(x-z_1)(x-z_2)...(x-z_n)$ \tab \tab \tab $\Rightarrow$ + (n+1) множення. \\
+    $\alpha(x-z_1)(x-z_2)...(x-z_n)$ \tab \tab \tab $\Rightarrow$ n множень. \\
+    $\Rightarrow 1+2+...+n=\dfrac{n(n+1)}{2}$ множень $=\Theta(n^2)$
+
+    \subsection{Інтерполяційна формула Лагранжа}
+    \begin{enumerate}
+        \item[3.] Представлення поліному через значення у точках. \\
+        Наслідок з основної теореми алгебри: поліном степеня $n$ однозначно відновлюється за значенням у $n+1$ різних точках. \\
+        $p(x)\leftrightarrow\{(x_i,y_i)\}, y_i=p(x_i), i=\overline{0,m}, m\geqslant n$ \\
+        Перехід від канонічного до даного: $(m+1)$ разів схема Горнера $\Rightarrow \Theta(mn)$ \\
+        \textbf{Операції:}
+        \begin{enumerate}
+            \item Додавання: m+1 додавань $(y_i+y_i')$
+            \item Множення на скаляр: m+1 множень $\alpha\cdot y_i$
+            \item Множення двох поліномів: m+1 множень $(y_i\cdot y_i')$ 
+        \end{enumerate}
+        \textbf{Але:}
+        \begin{enumerate}
+            \item Поліноми задаються на однакових $\{x_i\}$
+            \item $m\geqslant 2n$
+        \end{enumerate}
+        \item[4.] Обчислення значення поліному в точці - ?
+        \item[5.] Перехід до канонічного представлення - ?
+    \end{enumerate}
+    \textbf{Інтерполяційна формула Лагранжа:} \\
+    $\{(x_i,y_i)\}, i=\overline{0,m}$ \\
+    $p(x)=y_0\dfrac{(x-x_1)(x-x_2)...(x-x_m)}{(x_0-x_1)(x_0-x_2)...(x_0-x_m)}+y_1\dfrac{(x-x_0)(x-x_2)...(x-x_m)}{(x_1-x_0)(x_1-x_2)...(x_1-x_m)}+\\+
+    y_2\dfrac{(x-x_0)(x-x_1)(x-x_3)...(x-x_m)}{(x_2-x_0)(x_2-x_1)(x_2-x_3)...(x_2-x_m)}+...+
+    y_m\dfrac{(x-x_0)(x-x_1)...(x-x_{m-1})}{(x_m-x_0)(x_m-x_1)...(x_m-x_{m-1})}$ \\
+    Перехід до канонічної форми:
+    \begin{enumerate}
+        \item Обчислення $\{\lambda_k\}$, $\lambda=\dfrac{y_k}{(x_k-x_0)(x_k-x_1)...(x_k-x_m)}$ (немає $x_k-x_k$) $\Rightarrow$ m множень на один коеф. $\Rightarrow m(m+1)$ множень усього.
+        \item Обчислення у канонічній формі $\{\lambda_k(k)\}:$ $\lambda_k(x-x_0)(x-x_1)...(x-x_m)\Rightarrow\dfrac{m(m+1)}{2}$ множень на один поліном. Усього $(m+1)$ поліном $\Rightarrow\Theta(m^3)$
+    \end{enumerate}
+
+\newpage
+    \begin{enumerate}
+        \item[3.] $p(x)=l_0+l_1(x)+...+l_m(x)$
+    \end{enumerate}
+    Значення поліному у точці: \\
+    $p(x)=\lambda_0(x-x_1)(x-x_2)...(x-x_m)+\lambda_1(x-x_0)(x-x_2)...(x-x_m)+...+\lambda_m(x-x_0)...(x-x_{m-1})$
+    \begin{enumerate}
+        \item $\{\lambda_k\}$ - передобчислення $\Rightarrow\Theta(m^2)$ операцій, $\Theta(m)$ пам'яті.
+        \item Підстановка значення: m множень у кожному доданку $\Rightarrow m(m+1)$ множень загалом $=\Theta(m^2)$ \\
+        Додавання нової точки у опис поліному:
+        \begin{enumerate}
+            \item Обчислення значення $p()$
+            \item Переобчислення усіх $\{\lambda_k\}$
+        \end{enumerate}
+    \end{enumerate}
+    \subsection{Інтерполяційна формула Ньютона}
+    $p(x)\rightarrow\{(x_i,y_i)\}$ \\
+    $p(x)=d_0+d_1(x-x_0)+d_2(x-x_0)(x-x_1)+...+d_m(x-x_0)(x-x_1)...(x-x_{m-1})$ \\ 
+    Пояснення: $d_0=y_0$, $d_1(x-x_0)=y_1-y_0$, ... \\
+    $d_k=d_k(x_0,x_1,...,x_k)$ - пронормовані $\Delta^k$ від $x_0,x_1,...$ \\
+    $d_k=\dsum\limits_{t=0}^{k}\dfrac{y_t}{\prod\limits_{i\ne t}^{k}(x_t-x_i)}$ \\
+    $d_0=y_0$ \\
+    $d_1=\dfrac{y_0}{(x_0-x_1)}+\dfrac{y_1}{(x_1-x_0)}$ \\
+    $d_2=\dfrac{y_0}{(x_0-x_1)(x_0-x_2)}+\dfrac{y_1}{(x_1-x_0)(x_1-x_2)}+\dfrac{y_2}{(x_2-x_0)(x_2-x_1)}$
+    \begin{enumerate}
+        \item Обчислення коеф. $\{d_k\}$ \\
+        Ідея: якщо зберігати усі доданки ($\Theta(m)$ пам'яті), то $d_k$ обчислюється за $k$ множень (множення доданків на нові коеф.) $+k$ множень (обчислення нового доданку) $\Rightarrow$ \\ $\Rightarrow2k$ множень. $\Rightarrow$ разом буде $2(1+2+...+m)=m(m+1)$ операцій.
+        \item Перехід до канонічної форми: \\
+        $p(x)=d_0+d_1(x-x_0)+d_2(x-x_0)(x-x_1)+...+d_m(x-x_0)(x-x_{m-1})$ \\
+        $d_0=0$ - 0 операцій \\
+        $d_1(x-x_0)$ - 1 операція \\
+        $d_2(x-x_0)(x-x_1)$ - 2 операції \\
+        $d_3(x-x_0)(x-x_1)(x-x_2)$ - 2 операції $x(x-x_2)$ + 2 операції $xd_3$ = 4 операції \\
+        $d_m(x-x_0)(x-x_{m-1})$ - $2(m-1)$ операцій. \\
+        $\Rightarrow\Theta(m^2)$ операцій множення.
+        \item Обчислення поліному в точці: \\
+        $p(x)=d_0+d_1(x-x_0)+d_2(x-x_0)(x-x_1)+...+d_m(x-x_0)(x-x_1)...(x-x_{m-1})= \\ =
+        (...(((d_m(x-x_{m-1})+d_{m-1})(x-x_{m-2})+d_{m-2})(x-x_{m-3})+d_{m-3})...+d_1)(x-x_0)+d_0$ \\
+        $\Rightarrow$ m множень
+    \end{enumerate}
+
+\newpage
+    
+
+
+
+    
+    \textbf{}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
