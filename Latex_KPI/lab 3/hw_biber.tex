@@ -1,0 +1,33 @@
+% !TeX program = lualatex
+% !TeX encoding = utf8
+% !TeX spellcheck = uk_UA
+% !BIB program = biber
+
+\documentclass[a4paper]{article}
+\usepackage[fontsize=14pt]{fontsize}
+\usepackage{csquotes}
+\usepackage{fontspec}
+\usepackage[pageanchor]{hyperref}
+\usepackage[english,ukrainian]{babel}
+\setsansfont{CMU Sans Serif}
+\setmainfont{CMU Serif}
+\setmonofont{CMU Typewriter Text}
+\usepackage[footskip=1cm, headsep=0.3cm, left=2cm, top=2cm, right=2cm, bottom=2cm]{geometry}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{references.bib}
+
+
+\begin{document}
+    \pagestyle{empty}
+    \noindent
+    З огляду обраної теми моєї дипломної роботи можна виділити три основні категорії, по яким розподілялись книжки.
+    \begin{enumerate}
+        \item Вітрові електростанції: \cite{Okedu2023, Nielsen2024, MetaheuristicAlgorithmsinEnergy}
+        \item Метаевристики: \cite{Wang2024, Okwu2021}
+        \item Додаткова література: \cite{ExamplesEnergyModels, ComputationalIntelligence, Lobato2017, Kaul2021, SS2021, Kumar2020}
+    \end{enumerate}
+    
+    \nocite{*}
+    \printbibliography
+
+\end{document}
