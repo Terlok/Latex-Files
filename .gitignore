@@ -6,3 +6,7 @@
 *.gz
 *.toc
 *.listing
+*.bbl
+*.blg
+*.run.xml
+*.bcf
