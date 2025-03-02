@@ -1,0 +1,85 @@
+\documentclass[a4paper]{article}
+\usepackage[fontsize=14pt]{fontsize}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{pdflscape}
+\usepackage{tabularray}
+\usepackage[english,ukrainian]{babel}
+\setsansfont{CMU Sans Serif}
+\setmainfont{CMU Serif}
+\setmonofont{CMU Typewriter Text}
+\usepackage[left=1cm, top=0.1cm, right=0.1cm, bottom=0.1cm]{geometry}
+
+\newcommand{\Rom}[1]{\MakeUppercase{\romannumeral #1}}
+
+\newcommand{\Mo}{\rotatebox{90}{Понеділок}}
+\newcommand{\Tu}{\rotatebox{90}{Вівторок}}
+\newcommand{\We}{\rotatebox{90}{Середа}}
+\newcommand{\Th}{\rotatebox{90}{Четвер}}
+\newcommand{\Fr}{\rotatebox{90}{П’ятниця}}
+\newcommand{\Sa}{\rotatebox{90}{Субота}}
+
+\newcommand{\A}{ $8^{30}$ -- $10^{05}$}
+\newcommand{\B}{$10^{25}$ -- $12^{00}$}
+\newcommand{\C}{$12^{20}$ -- $13^{55}$}
+\newcommand{\D}{$14^{15}$ -- $15^{50}$}
+\newcommand{\E}{$16^{10}$ -- $17^{45}$}
+\newcommand{\F}{$18^{30}$ -- $20^{05}$}
+\newcommand{\G}{$20^{20}$ -- $21^{55}$}
+
+\definecolor{lightgray}{RGB}{224,224,224}
+\definecolor{lightblue}{RGB}{223,247,255}
+\definecolor{superlightgray}{RGB}{246,246,246}
+
+
+\begin{document}
+\pagestyle{empty}
+\noindent
+    \begin{landscape}
+        \begin{center}  
+            %\SetTblrInner{caption={\textbf{Розклад занять}}, label={}}
+            %\SetTblrInner{caption={\centering{\textbf{Розклад занять}}}, label={}}
+            
+            \begin{tblr}{
+                width=\linewidth,
+                colspec={Q[c,m]Q[c,m]Q[c,m,4cm]Q[c,m,4cm]Q[c,m]Q[c,m]Q[c,m,4cm]Q[c,m,4cm]},
+                caption = {\textbf{Розклад занять}},
+                row{even}  = {superlightgray},
+                row{odd}   = {lightblue},
+                row{1}     = {font=\bfseries,lightgray},
+                cell{2,9,16}{1}  = {r=7,c=1}{c,m,font=\bfseries,lightgray},
+                cell{2,9,16}{5}  = {r=7,c=1}{c,m,font=\bfseries,lightgray},
+                hline{2,9,16} = {1}{-}{},
+                hline{2,9,16} = {2}{-}{},
+                vline{2,3,5,6,7} = {1}{-}{},
+                vline{2,3,5,6,7} = {2}{-}{},
+                vlines,
+                hlines,
+                }
+Дні & Години & \Rom{1} Тиждень & \Rom{2} Тиждень & Дні & Години & \Rom{1} Тиждень & \Rom{2} Тиждень \\
+\Mo & \A     &                 &                 & \Th & \A     &                 &  \\
+    & \B     &                 &                 &     & \B     &                 &  \\
+    & \C     &                 &                 &     & \C     &                 &  \\
+    & \D     &                 &                 &     & \D     &                 &  \\
+    & \E     &                 &                 &     & \E     &                 &  \\
+    & \F     &                 &                 &     & \F     &                 &  \\
+    & \G     &                 &                 &     & \G     &                 &  \\
+\Tu & \A     &                 &                 & \Fr & \A     &                 &  \\
+    & \B     &                 &                 &     & \B     &                 &  \\
+    & \C     &                 &                 &     & \C     &                 &  \\
+    & \D     &                 &                 &     & \D     &                 &  \\
+    & \E     &                 &                 &     & \E     &                 &  \\
+    & \F     &                 &                 &     & \F     &                 &  \\
+    & \G     &                 &                 &     & \G     &                 &  \\
+\We & \A     &                 &                 & \Sa & \A     &                 &  \\
+    & \B     &                 &                 &     & \B     &                 &  \\
+    & \C     &                 &                 &     & \C     &                 &  \\
+    & \D     &                 &                 &     & \D     &                 &  \\
+    & \E     &                 &                 &     & \E     &                 &  \\
+    & \F     &                 &                 &     & \F     &                 &  \\
+    & \G     &                 &                 &     & \G     &                 &  \\
+            \end{tblr}
+        \end{center}
+    \end{landscape}
+
+\end{document}
