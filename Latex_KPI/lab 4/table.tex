@@ -2,6 +2,8 @@
 \usepackage[fontsize=14pt]{fontsize}
 \usepackage{fontspec}
 \usepackage{xcolor}
+\usepackage{caption}
+\usepackage{datetime2}
 \usepackage{pdflscape}
 \usepackage{tabularray}
 \usepackage[english,ukrainian]{babel}
@@ -12,12 +14,12 @@
 
 \newcommand{\Rom}[1]{\MakeUppercase{\romannumeral #1}}
 
-\newcommand{\Mo}{\rotatebox{90}{Понеділок}}
-\newcommand{\Tu}{\rotatebox{90}{Вівторок}}
-\newcommand{\We}{\rotatebox{90}{Середа}}
-\newcommand{\Th}{\rotatebox{90}{Четвер}}
-\newcommand{\Fr}{\rotatebox{90}{П’ятниця}}
-\newcommand{\Sa}{\rotatebox{90}{Субота}}
+\newcommand{\Mo}{{Понеділок}}
+\newcommand{\Tu}{{Вівторок}}
+\newcommand{\We}{{Середа}}
+\newcommand{\Th}{{Четвер}}
+\newcommand{\Fr}{{П’ятниця}}
+\newcommand{\Sa}{{Субота}}
 
 \newcommand{\A}{ $8^{30}$ -- $10^{05}$}
 \newcommand{\B}{$10^{25}$ -- $12^{00}$}
@@ -31,24 +33,23 @@
 \definecolor{lightblue}{RGB}{223,247,255}
 \definecolor{superlightgray}{RGB}{246,246,246}
 
+\captionsetup[table]{labelformat=empty}
 
 \begin{document}
 \pagestyle{empty}
 \noindent
     \begin{landscape}
-        \begin{center}  
-            %\SetTblrInner{caption={\textbf{Розклад занять}}, label={}}
-            %\SetTblrInner{caption={\centering{\textbf{Розклад занять}}}, label={}}
-            
+        \begin{table}[ht]
+            \caption{\Large{\textbf{Розклад занять}}}
+            \centering
             \begin{tblr}{
                 width=\linewidth,
                 colspec={Q[c,m]Q[c,m]Q[c,m,4cm]Q[c,m,4cm]Q[c,m]Q[c,m]Q[c,m,4cm]Q[c,m,4cm]},
-                caption = {\textbf{Розклад занять}},
                 row{even}  = {superlightgray},
                 row{odd}   = {lightblue},
                 row{1}     = {font=\bfseries,lightgray},
-                cell{2,9,16}{1}  = {r=7,c=1}{c,m,font=\bfseries,lightgray},
-                cell{2,9,16}{5}  = {r=7,c=1}{c,m,font=\bfseries,lightgray},
+                cell{2,9,16}{1}  = {r=7,c=1}{c,m,cmd=\rotatebox{90},font=\bfseries,lightgray},
+                cell{2,9,16}{5}  = {r=7,c=1}{c,m,cmd=\rotatebox{90},font=\bfseries,lightgray},
                 hline{2,9,16} = {1}{-}{},
                 hline{2,9,16} = {2}{-}{},
                 vline{2,3,5,6,7} = {1}{-}{},
@@ -79,7 +80,7 @@
     & \F     &                 &                 &     & \F     &                 &  \\
     & \G     &                 &                 &     & \G     &                 &  \\
             \end{tblr}
-        \end{center}
+        \end{table}
     \end{landscape}
 
 \end{document}
