@@ -1,0 +1,67 @@
+%\documentclass[tikz,border=0.1cm]{standalone}
+\documentclass[a4paper]{article}
+\usepackage[fontsize=11pt]{fontsize}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{datetime}
+\usetikzlibrary{arrows.meta} 
+\usetikzlibrary{shadings}
+\usetikzlibrary{patterns}
+\usepackage[english,ukrainian]{babel}
+\setsansfont{CMU Sans Serif}
+\setmainfont{CMU Serif}
+\setmonofont{CMU Typewriter Text}
+\usepackage[footskip=0.5cm, headsep=0.3cm, left=1cm, top=1cm, right=1cm, bottom=1cm]{geometry}
+
+\definecolor{gold}{RGB}{255, 215, 0}
+
+\NewDocumentCommand{\Clock}{m m}{
+    \begin{tikzpicture}
+        % ===== Зовнішнє коло =====
+        \draw[thick, black] (0,0) circle (5cm);
+
+        % ===== Внутрішнє коло =====
+        \fill[pattern=north east lines, pattern color=gold] (0,0) circle (5cm);
+        \fill[pattern=north west lines, pattern color=gold] (0,0) circle (5cm);
+
+        % ===== Цифри =====
+        \foreach \num in {1,2,...,12} {
+            \node[font=\bfseries, scale=2, color=black] at ({90 - \num*30}:4.2cm) {\num};
+        }
+        
+        % ===== Поділки між цифрами =====
+        \foreach \t in {0,6,...,354} {
+            \draw[black, thick, line width=1pt] ({90-\t}:4.8cm) -- ({90-\t}:5cm);
+        }
+        \foreach \t in {0,30,...,354} {
+            \draw[black, thick, line width=2.3pt] ({90-\t}:4.7cm) -- ({90-\t}:5cm);
+        }
+        
+        % ===== Обчислення кутів для стрілок =====
+        \pgfmathparse{90 - (#1 * 30) - (#2 * 0.5)}
+        \let\hourAngle\pgfmathresult
+        
+        \pgfmathparse{90 - (#2 * 6)}
+        \let\minuteAngle\pgfmathresult
+        
+        % ===== Стрілки =====
+        \draw [ultra thick, black, arrows = {-Stealth[fill=none,length=15pt]}] (0,0) -- ({2.2*cos(\hourAngle)}, {2.2*sin(\hourAngle)});
+        \draw [ultra thick, black, arrows = {-Stealth[fill=none,length=15pt]}] (0,0) -- ({3.5*cos(\minuteAngle)}, {3.5*sin(\minuteAngle)});
+
+        % ===== Центральне коло =====
+        \shade[shading=axis, inner color=white, outer color=black] (0,0) circle (0.3cm);
+    \end{tikzpicture}
+}
+
+
+\begin{document}
+
+    \begin{figure}[!h]\centering
+        \Clock{\the\currenthour}{\the\currentminute}
+        \caption{Поточний час: \currenttime}
+        \label{pic:Clock}
+    \end{figure}
+
+\end{document}
