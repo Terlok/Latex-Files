@@ -1,10 +1,8 @@
-%\documentclass[tikz,border=0.1cm]{standalone}
 \documentclass[a4paper]{article}
 \usepackage[fontsize=11pt]{fontsize}
 \usepackage{fontspec}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usepackage{amsmath}
 \usepackage{datetime}
 \usetikzlibrary{arrows.meta} 
 \usetikzlibrary{shadings}
@@ -41,14 +39,14 @@
         
         % ===== Обчислення кутів для стрілок =====
         \pgfmathparse{90 - (#1 * 30) - (#2 * 0.5)}
-        \let\hourAngle\pgfmathresult
+        \let\hour\pgfmathresult
         
         \pgfmathparse{90 - (#2 * 6)}
-        \let\minuteAngle\pgfmathresult
+        \let\minute\pgfmathresult
         
         % ===== Стрілки =====
-        \draw [ultra thick, black, arrows = {-Stealth[fill=none,length=15pt]}] (0,0) -- ({2.2*cos(\hourAngle)}, {2.2*sin(\hourAngle)});
-        \draw [ultra thick, black, arrows = {-Stealth[fill=none,length=15pt]}] (0,0) -- ({3.5*cos(\minuteAngle)}, {3.5*sin(\minuteAngle)});
+        \draw [ultra thick, black, arrows = {-Stealth[fill=none,length=15pt]}] (0,0) -- ({2.2*cos(\hour)}, {2.2*sin(\hour)});
+        \draw [ultra thick, black, arrows = {-Stealth[fill=none,length=15pt]}] (0,0) -- ({3.5*cos(\minute)}, {3.5*sin(\minute)});
 
         % ===== Центральне коло =====
         \shade[shading=axis, inner color=white, outer color=black] (0,0) circle (0.3cm);
