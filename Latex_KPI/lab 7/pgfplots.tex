@@ -1,0 +1,54 @@
+\documentclass[a4paper]{article}
+\usepackage[fontsize=11pt]{fontsize}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{intersections}
+\usepackage[english,ukrainian]{babel}
+\setsansfont{CMU Sans Serif}
+\setmainfont{CMU Serif}
+\setmonofont{CMU Typewriter Text}
+\usepackage[footskip=0.5cm, headsep=0.3cm, left=1cm, top=1cm, right=1cm, bottom=1cm]{geometry}
+
+\NewDocumentCommand{\Intersections}{ m m O{-5:5} O{-5:5} }{
+    \begin{tikzpicture}
+        \begin{axis}[
+            axis lines=middle,
+            xlabel=$x$,
+            ylabel=$y$,
+            width=12cm, height=12cm,
+        ]
+        \addplot[blue, name path global=A, thick, smooth, domain=#3] {#1};
+        \addplot[purple, name path global=B, thick, smooth, domain=#4] {#2};
+
+        \fill [name intersections={of=A and B, name=I, total=\t}, black]
+
+        \foreach \s in {1,...,\t}{(I-\s) circle (2pt) node[above, font=\small, black] {
+            \pgfplotspointgetcoordinates{(I-\s)}
+            $(
+                \pgfmathprintnumber[fixed]{\pgfkeysvalueof{/data point/x}},
+                \pgfmathprintnumber[fixed]{\pgfkeysvalueof{/data point/y}}
+            )$
+        }};
+        \end{axis}
+    \end{tikzpicture}
+}
+
+
+\begin{document}
+
+    \begin{figure}[!h]\centering
+        \Intersections{cos(deg(x))}{0.25*x}[-4.5:4.5][-3:2]
+        \caption{Графік з визначеними межами для функцій}
+        \label{graph:1}
+    \end{figure}
+
+    \begin{figure}[!h]\centering
+        \Intersections{cos(deg(x))}{0.25*x}
+        \caption{Графік з межами по замовченню}
+        \label{graph:2}
+    \end{figure}
+
+\end{document}
