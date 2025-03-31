@@ -10,3 +10,5 @@
 *.blg
 *.run.xml
 *.bcf
+*.snm
+*.nav
